@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MyOwnTimer</string>
+    <string name="app_name_eng">MyOwnTimer</string>
+    <string name="app_name_kor">나만의 타이머</string>
 </resources>
