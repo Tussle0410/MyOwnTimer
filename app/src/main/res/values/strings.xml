@@ -4,5 +4,6 @@
     //Main Page Text
     <string name="txt_main_01">당신은 연속</string>
     <string name="txt_main_02">일간</string>
+    <string name="text_add">추가</string>
     <string name="txt_main_03">목표를 향해 나아가고 있습니다. (ﾉ›_‹)ﾉ</string>
 </resources>

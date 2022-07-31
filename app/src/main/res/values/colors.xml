@@ -13,5 +13,6 @@
     //MainColor
     <color name="main_color">#448AFF</color>
     <color name="successColor">#FF9E80</color>
+    <color name="backgroundTransparency">#00ff0000</color>
 
 </resources>
