@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewPager"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/font_main"
+        android:layout_marginStart="15dp"
         android:padding="5dp"
-        android:text="정보처리기사"
         android:textColor="@color/main_color"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,8 +24,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:layout_marginStart="15dp"
         android:fontFamily="@font/font_splash"
-        android:text="3"
         android:textColor="@color/successColor"
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:fontFamily="@font/font_main"
-        android:text="/"
+        android:text="@string/txt_slash"
         android:textColor="@color/black"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/goalTodo"
@@ -50,7 +51,6 @@
         android:padding="5dp"
         android:fontFamily="@font/font_splash"
         android:textColor="@color/black"
-        android:text="5"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="@+id/goalTodo"
         app:layout_constraintStart_toEndOf="@+id/textView8"
@@ -61,9 +61,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:layout_marginStart="15dp"
         android:fontFamily="@font/font_main"
         android:textColor="@color/successColor"
-        android:text="무슨무슨 책 2단원 나가기"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/goalTodo" />
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/font_main"
         android:padding="5dp"
-        android:text="문제집 몇 페이지 풀어보기"
+        android:layout_marginStart="15dp"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/font_main"
         android:padding="5dp"
-        android:text="블로그에 정리한 내용 올리기"
+        android:layout_marginStart="15dp"
         android:textColor="@color/successColor"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +98,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/font_main"
         android:padding="5dp"
-        android:text="..."
+        android:layout_marginStart="15dp"
+        android:text="@string/txt_comma"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +122,7 @@
             android:fontFamily="@font/font_main"
             android:gravity="center"
             android:padding="5dp"
-            android:text="오늘"
+            android:text="@string/txt_today"
             android:textColor="@color/main_color"
             android:textSize="20sp" />
 
@@ -132,7 +133,7 @@
             android:fontFamily="@font/font_main"
             android:gravity="center"
             android:padding="5dp"
-            android:text="주"
+            android:text="@string/txt_weekend"
             android:textColor="@color/main_color"
             android:textSize="20sp" />
 
@@ -143,7 +144,7 @@
             android:fontFamily="@font/font_main"
             android:gravity="center"
             android:padding="5dp"
-            android:text="달"
+            android:text="@string/txt_month"
             android:textColor="@color/main_color"
             android:textSize="20sp" />
 
@@ -154,7 +155,7 @@
             android:fontFamily="@font/font_main"
             android:gravity="center"
             android:padding="5dp"
-            android:text="통합"
+            android:text="@string/txt_total"
             android:textColor="@color/main_color"
             android:textSize="20sp" />
     </LinearLayout>
@@ -175,7 +176,6 @@
             android:fontFamily="@font/font_splash"
             android:padding="5dp"
             android:gravity="center"
-            android:text="4:16"
             android:textColor="@color/black"
             android:textSize="20sp" />
         <TextView
@@ -186,7 +186,6 @@
             android:fontFamily="@font/font_splash"
             android:padding="5dp"
             android:gravity="center"
-            android:text="7H"
             android:textColor="@color/black"
             android:textSize="20sp" />
         <TextView
@@ -197,7 +196,6 @@
             android:fontFamily="@font/font_splash"
             android:padding="5dp"
             android:gravity="center"
-            android:text="32H"
             android:textColor="@color/black"
             android:textSize="20sp" />
         <TextView
@@ -208,7 +206,7 @@
             android:fontFamily="@font/font_splash"
             android:padding="5dp"
             android:gravity="center"
-            android:text="300H"
+
             android:textColor="@color/black"
             android:textSize="20sp" />
     </LinearLayout>

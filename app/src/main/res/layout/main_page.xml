@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:background="@color/backgroundTransparency"
             android:padding="25dp"
-            android:src="@drawable/img_setting"
+            android:src="@drawable/icon_setting"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:background="@color/backgroundTransparency"
             android:padding="25dp"
-            android:src="@drawable/img_profile"
+            android:src="@drawable/icon_profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

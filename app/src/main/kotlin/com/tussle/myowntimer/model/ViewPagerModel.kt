@@ -2,6 +2,7 @@ package com.tussle.myowntimer.model
 
 
 data class ViewPagerModel(
+    val title : String,
     val goalTodo : String,
     val allTodo : String,
     val todo1 : String,

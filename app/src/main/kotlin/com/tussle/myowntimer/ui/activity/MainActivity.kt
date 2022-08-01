@@ -17,7 +17,14 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
     private lateinit var binding : MainPageBinding
-    private val temp = mutableListOf(ViewPagerModel("4", "5", "할일1", "할일2","할일3","1H","10H","20H","100H"))
+    private val temp = mutableListOf(ViewPagerModel(
+        "정보처리기사","4", "5",
+        "할일1", "할일2","할일3","1H",
+        "10H","20H","100H"),
+        ViewPagerModel(
+            "코딩 공부","2", "5",
+            "JAVA", "Algorithm","Android","4H",
+            "10H","30H","100H"))
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.main_page)
