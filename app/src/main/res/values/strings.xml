@@ -6,4 +6,16 @@
     <string name="txt_main_02">일간</string>
     <string name="text_add">추가</string>
     <string name="txt_main_03">목표를 향해 나아가고 있습니다. (ﾉ›_‹)ﾉ</string>
+    //ViewPager2 Item Text
+    <string name="txt_slash">/</string>
+    <string name="txt_today">오늘</string>
+    <string name="txt_weekend">주</string>
+    <string name="txt_month">달</string>\
+    <string name="txt_total">통합</string>
+    <string name="txt_comma">...</string>
+    //BottomNavi Menu Text
+    <string name="txt_timer">타이머</string>
+    <string name="txt_todo">할 일</string>
+    <string name="txt_calendar">달력</string>
+    <string name="txt_chart">통계</string>
 </resources>

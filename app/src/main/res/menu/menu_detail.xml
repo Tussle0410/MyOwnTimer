@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navi_timer"
+        android:enabled="true"
+        android:title="@string/txt_timer"
+        android:icon="@drawable/icon_timer"
+        />
+    <item
+        android:id="@+id/navi_todo"
+        android:enabled="true"
+        android:title="@string/txt_todo"
+        android:icon="@drawable/icon_todo"
+        />
+    <item
+        android:id="@+id/navi_calendar"
+        android:enabled="true"
+        android:title="@string/txt_calendar"
+        android:icon="@drawable/icon_calendar"
+        />
+    <item
+        android:id="@+id/navi_chart"
+        android:enabled="true"
+        android:title="@string/txt_chart"
+        android:icon="@drawable/icon_chart"
+        />
+</menu>
