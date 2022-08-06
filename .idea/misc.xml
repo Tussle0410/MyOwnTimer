@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/drawable/border_main.xml" value="0.1" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
@@ -11,13 +12,23 @@
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/drawable/img_profile.xml" value="0.1" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/drawable/img_setting.xml" value="0.1" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/drawable/navi_menu_color.xml" value="0.1" />
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout-v24/detail_timer_stopwatch.xml" value="0.1625" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/activity_main.xml" value="0.12907608695652173" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_calendar_fragment.xml" value="0.1625" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_chart_fragment.xml" value="0.1625" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_chart_fragmnet.xml" value="0.1625" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_page.xml" value="0.16666666666666666" />
-        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_timer_fragment.xml" value="0.1625" />
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_timer_countdown_frame.xml" value="0.1625" />
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_timer_countup_fragment.xml" value="0.1625" />
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_timer_countup_frame.xml" value="0.1625" />
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_timer_fragment.xml" value="0.16666666666666666" />
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_timer_frame.xml" value="0.1625" />
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_timer_stopwatch.xml" value="0.16666666666666666" />
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_timer_stopwatch_fragment.xml" value="0.1625" />
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_timer_timer.xml" value="0.1625" />
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_timer_timer_fragment.xml" value="0.1625" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_todo_fragment.xml" value="0.1625" />
+        <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/detail_todo_frame.xml" value="0.1625" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/main_page.xml" value="0.1" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/main_viewpager_item.xml" value="0.16666666666666666" />
         <entry key="..\:/Project/MyOwnTimer/app/src/main/res/layout/profile_page.xml" value="0.1625" />

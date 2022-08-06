@@ -8,16 +8,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.tussle.myowntimer.R
-import com.tussle.myowntimer.databinding.DetailChartFragmentBinding
+import com.tussle.myowntimer.databinding.DetailChartFrameBinding
 import com.tussle.myowntimer.viewmodel.DetailViewModel
 
 class DetailChartFragment : Fragment() {
     private val viewModel : DetailViewModel by lazy {
         ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
     }
-    private lateinit var binding : DetailChartFragmentBinding
+    private lateinit var binding : DetailChartFrameBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.detail_chart_fragment,container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.detail_chart_frame,container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = requireActivity()
         return binding.root

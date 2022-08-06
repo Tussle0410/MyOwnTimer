@@ -24,7 +24,7 @@ class DetailActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.detail_page)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.currentFragment.observe(this, Observer {
+        viewModel.detailFragment.observe(this, Observer {
             changeFragment(it!!)
         })
     }

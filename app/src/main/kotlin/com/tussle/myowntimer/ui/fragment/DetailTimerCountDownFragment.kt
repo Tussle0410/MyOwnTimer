@@ -8,16 +8,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.tussle.myowntimer.R
-import com.tussle.myowntimer.databinding.DetailCalendarFrameBinding
+import com.tussle.myowntimer.databinding.DetailTimerCountdownFrameBinding
 import com.tussle.myowntimer.viewmodel.DetailViewModel
 
-class DetailCalendarFragment : Fragment() {
+class DetailTimerCountDownFragment : Fragment() {
     private val viewModel : DetailViewModel by lazy {
         ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
     }
-    private lateinit var binding : DetailCalendarFrameBinding
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.detail_calendar_frame,container,false)
+    private lateinit var binding : DetailTimerCountdownFrameBinding
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.detail_timer_countdown_frame,container,false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = requireActivity()
         return binding.root
@@ -25,9 +25,5 @@ class DetailCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
-    companion object{
-        fun getInstance()
-            =DetailCalendarFragment()
     }
 }
