@@ -14,5 +14,8 @@
     <color name="main_color">#448AFF</color>
     <color name="successColor">#FF9E80</color>
     <color name="backgroundTransparency">#00ff0000</color>
+    //Todo Color
+    <color name="add_background">#3AB0FF</color>
+    <color name="add_icon">#F9F2ED</color>
 
 </resources>

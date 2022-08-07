@@ -21,31 +21,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <Button
+            <TextView
                 android:id="@+id/countUp_button"
                 android:onClick="@{()->viewModel.countUpButtonClick()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/gray"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:background="@drawable/countup_border"
                 android:fontFamily="@font/font_main"
                 android:text="@string/txt_stopwatch"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="@color/black"
-                app:strokeWidth="2dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <TextView
                 android:id="@+id/countDown_button"
                 android:onClick="@{()->viewModel.countDownButtonClick()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/gray"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:background="@drawable/countdown_border"
                 android:fontFamily="@font/font_main"
                 android:text="@string/txt_timer"
-                android:textColor="@color/black"
-                app:strokeColor="@color/gray"
-                app:strokeWidth="2dp" />
+                android:textColor="@color/black" />
         </LinearLayout>
 
         <FrameLayout
