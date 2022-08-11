@@ -5,7 +5,7 @@
     <string name="txt_main_01">당신은 연속</string>
     <string name="txt_main_02">일간</string>
     <string name="text_add">추가</string>
-    <string name="txt_main_03">목표를 향해 나아가고 있습니다. (ﾉ›_‹)ﾉ</string>
+    <string name="txt_main_03">목표를 향해 나아가고 있습니다.</string>
     //ViewPager2 Item Text
     <string name="txt_slash">/</string>
     <string name="txt_today">오늘</string>
@@ -21,4 +21,16 @@
     //TimerFragment Frame Text
     <string name="txt_stopwatch">스톱워치</string>
     <string name="txt_start">시 작</string>
+    //CalendarFragment Weekend Text
+    <string name="txt_sunDay">SUN</string>
+    <string name="txt_monDay">MON</string>
+    <string name="txt_tueDay">TUE</string>
+    <string name="txt_wedDay">WED</string>
+    <string name="txt_thuDay">THU</string>
+    <string name="txt_friDay">FRI</string>
+    <string name="txt_satDay">SAT</string>
+    //SettingPage Text
+    <string name="txt_setting">설 정</string>
+    //ProfilePage Text
+    <string name="txt_profile">내 정보</string>
 </resources>
