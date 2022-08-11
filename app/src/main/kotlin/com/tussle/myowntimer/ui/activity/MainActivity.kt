@@ -11,6 +11,7 @@ import com.tussle.myowntimer.databinding.MainPageBinding
 import com.tussle.myowntimer.model.ViewPagerModel
 import com.tussle.myowntimer.ui.adapter.MainViewPagerAdapter
 import com.tussle.myowntimer.viewmodel.MainViewModel
+import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
     private val viewModel : MainViewModel by lazy {
@@ -32,6 +33,12 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         adsSetting()
         pageSetting()
+        binding.mainProfileButton.setOnClickListener {
+            startActivity<ProfileActivity>()
+        }
+        binding.mainSettingButton.setOnClickListener {
+            startActivity<SettingActivity>()
+        }
     }
     private fun pageSetting(){
         with(binding.viewPager2){
