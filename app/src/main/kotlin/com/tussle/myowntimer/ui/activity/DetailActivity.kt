@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.DetailPageBinding
 import com.tussle.myowntimer.model.DetailNaviMenu
@@ -24,9 +26,15 @@ class DetailActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.detail_page)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        adsSetting()
         viewModel.detailFragment.observe(this, Observer {
             changeFragment(it!!)
         })
+    }
+    private fun adsSetting(){
+        MobileAds.initialize(this){}
+        val adRequest = AdRequest.Builder().build()
+        binding.mainAdView.loadAd(adRequest)
     }
     private fun changeFragment(menu_tag : DetailNaviMenu){
         val transaction = supportFragmentManager.beginTransaction()
@@ -50,4 +58,5 @@ class DetailActivity : AppCompatActivity() {
             }
         transaction.commitNowAllowingStateLoss()
     }
+
 }
