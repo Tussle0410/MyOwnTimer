@@ -18,7 +18,7 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     //Splash Method
     fun splashStart(){
         GlobalScope.launch (Dispatchers.IO){
-            delay(3000)
+            delay(2000)
             _splashEvent.postValue(Event(true))
         }
     }
