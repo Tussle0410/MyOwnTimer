@@ -82,17 +82,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+
         <Button
-            android:id="@+id/button"
+            android:id="@+id/add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
             android:background="@color/backgroundTransparency"
             android:fontFamily="@font/font_main"
             android:text="@string/text_add"
             android:textSize="25sp"
-            app:layout_constraintBottom_toTopOf="@+id/main_adView"
+            app:layout_constraintBottom_toTopOf="@+id/main_setting_button"
             app:layout_constraintEnd_toEndOf="parent" />
-
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/main_adView"
@@ -107,22 +108,40 @@
             app:layout_constraintStart_toStartOf="parent"
              />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager2"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/border_main"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/add_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:layout_constraintVertical_bias="0.1" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
 
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/main_viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/border_main"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                android:id="@+id/main_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:dotsCornerRadius="8dp"
+                app:dotsSpacing="4dp"
+                app:dotsSize="16sp"
+                app:dotsColor="@color/main_color"
+                app:dotsStrokeColor="@color/main_color"
+                app:dotsStrokeWidth="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

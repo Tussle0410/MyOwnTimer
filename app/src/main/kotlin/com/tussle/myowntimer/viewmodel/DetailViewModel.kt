@@ -1,15 +1,14 @@
 package com.tussle.myowntimer.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.google.android.material.navigation.NavigationBarView
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.event.Event
 import com.tussle.myowntimer.model.DetailNaviMenu
 
-class DetailViewModel(application: Application) : AndroidViewModel(application) {
+class DetailViewModel : ViewModel() {
     private val _detailFragment = MutableLiveData(DetailNaviMenu.Timer)
     private val _countUpButtonEvent = MutableLiveData<Event<Boolean>>()
     private val _countDownButtonEvent = MutableLiveData<Event<Boolean>>()

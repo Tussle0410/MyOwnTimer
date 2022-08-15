@@ -6,6 +6,7 @@
     <string name="txt_main_02">일간</string>
     <string name="text_add">추가</string>
     <string name="txt_main_03">목표를 향해 나아가고 있습니다.</string>
+    <string name="txt_add_hint">목표를 적어주세요.</string>
     //ViewPager2 Item Text
     <string name="txt_slash">/</string>
     <string name="txt_today">오늘</string>

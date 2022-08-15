@@ -1,38 +1,62 @@
 package com.tussle.myowntimer.ui.activity
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.tussle.myowntimer.R
+import com.tussle.myowntimer.databinding.MainAddDialogBinding
 import com.tussle.myowntimer.databinding.MainPageBinding
-import com.tussle.myowntimer.model.ViewPagerModel
+import com.tussle.myowntimer.event.EventObserver
+import com.tussle.myowntimer.model.DB.Repo
+import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.ui.adapter.MainViewPagerAdapter
 import com.tussle.myowntimer.viewmodel.MainViewModel
 import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
     private val viewModel : MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
+        val factory = RepoFactory(Repo())
+        ViewModelProvider(this, factory).get(MainViewModel::class.java)
     }
     private lateinit var binding : MainPageBinding
-    private val temp = mutableListOf(ViewPagerModel(
-        "정보처리기사","4", "5",
-        "할일1", "할일2","할일3","1H",
-        "10H","20H","100H"),
-        ViewPagerModel(
-            "코딩 공부","2", "5",
-            "JAVA", "Algorithm","Android","4H",
-            "10H","30H","100H"))
+    private lateinit var viewPagerAdapter: MainViewPagerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.main_page)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         adsSetting()
-        pageSetting()
+        setProfileAndSettingButton()
+        setAddButton()
+        viewModel.getTitle()
+        viewModel.titleInfo.observe(this, Observer {
+            viewModel.setList()
+            pageSetting()
+        })
+        viewModel.insertEvent.observe(this,EventObserver{
+            viewPagerAdapter.notifyDataSetChanged()
+        })
+    }
+    private fun setAddButton(){
+        binding.addButton.setOnClickListener {
+            val bindingDialog = MainAddDialogBinding.inflate(LayoutInflater.from(binding.root.context))
+            AlertDialog.Builder(this)
+                .setTitle("목표 추가하기!")
+                .setView(bindingDialog.root)
+                .setPositiveButton("추가",DialogInterface.OnClickListener { _, _ ->
+                    viewModel.insertTitle(bindingDialog.dialogTitle.text.toString())
+                })
+                .show()
+        }
+    }
+    private fun setProfileAndSettingButton(){
         binding.mainProfileButton.setOnClickListener {
             startActivity<ProfileActivity>()
         }
@@ -41,10 +65,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun pageSetting(){
-        with(binding.viewPager2){
+        viewPagerAdapter = MainViewPagerAdapter(viewModel.viewPagerInfo.value!!,this)
+        with(binding.mainViewPager){
             offscreenPageLimit
-            adapter = MainViewPagerAdapter(temp)
+            adapter = viewPagerAdapter
         }
+        binding.mainIndicator.attachTo(binding.mainViewPager)
     }
     private fun adsSetting(){
         MobileAds.initialize(this){}
