@@ -31,11 +31,13 @@ class DetailActivity : AppCompatActivity() {
             changeFragment(it!!)
         })
     }
+    //Set Google Ads
     private fun adsSetting(){
         MobileAds.initialize(this){}
         val adRequest = AdRequest.Builder().build()
         binding.mainAdView.loadAd(adRequest)
     }
+    //BottomNavigation Fragment Change
     private fun changeFragment(menu_tag : DetailNaviMenu){
         val transaction = supportFragmentManager.beginTransaction()
         var targetFragment = supportFragmentManager.findFragmentByTag(menu_tag.tag)

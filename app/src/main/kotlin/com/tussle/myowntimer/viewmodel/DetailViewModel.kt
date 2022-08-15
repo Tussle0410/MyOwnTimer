@@ -12,12 +12,16 @@ class DetailViewModel : ViewModel() {
     private val _detailFragment = MutableLiveData(DetailNaviMenu.Timer)
     private val _countUpButtonEvent = MutableLiveData<Event<Boolean>>()
     private val _countDownButtonEvent = MutableLiveData<Event<Boolean>>()
+    private val _countUpEvent = MutableLiveData<Boolean>()
     val detailFragment : LiveData<DetailNaviMenu>
         get() = _detailFragment
     val countUpButtonEvent : LiveData<Event<Boolean>>
         get() = _countUpButtonEvent
     val countDownButtonEvent : LiveData<Event<Boolean>>
         get() = _countDownButtonEvent
+    val countUpEvent : LiveData<Boolean>
+        get() = _countUpEvent
+    var mStartTime : Long = 0L
     //Detail Page Bottom Menu Click Listener
     val bottomMenuClickListener =
         NavigationBarView.OnItemSelectedListener { item ->

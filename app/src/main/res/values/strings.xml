@@ -22,6 +22,7 @@
     //TimerFragment Frame Text
     <string name="txt_stopwatch">스톱워치</string>
     <string name="txt_start">시 작</string>
+    <string name="txt_stop">정 지</string>
     //CalendarFragment Weekend Text
     <string name="txt_sunDay">SUN</string>
     <string name="txt_monDay">MON</string>
