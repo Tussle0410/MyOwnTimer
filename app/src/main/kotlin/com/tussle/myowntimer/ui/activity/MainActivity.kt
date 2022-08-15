@@ -32,9 +32,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.main_page)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        adsSetting()
-        setProfileAndSettingButton()
-        setAddButton()
+        initPage()
         viewModel.getTitle()
         viewModel.titleInfo.observe(this, Observer {
             viewModel.setList()
@@ -44,6 +42,13 @@ class MainActivity : AppCompatActivity() {
             viewPagerAdapter.notifyDataSetChanged()
         })
     }
+    //Main Page Ads, ViewPager2... init
+    private fun initPage(){
+        adsSetting()
+        setProfileAndSettingButton()
+        setAddButton()
+    }
+    //Set Main Page TitleAdd Button
     private fun setAddButton(){
         binding.addButton.setOnClickListener {
             val bindingDialog = MainAddDialogBinding.inflate(LayoutInflater.from(binding.root.context))
@@ -56,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
     }
+    //Set Main Page Profile, Setting Button
     private fun setProfileAndSettingButton(){
         binding.mainProfileButton.setOnClickListener {
             startActivity<ProfileActivity>()
@@ -64,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             startActivity<SettingActivity>()
         }
     }
+    //Set ViewPager2
     private fun pageSetting(){
         viewPagerAdapter = MainViewPagerAdapter(viewModel.viewPagerInfo.value!!,this)
         with(binding.mainViewPager){
@@ -72,6 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.mainIndicator.attachTo(binding.mainViewPager)
     }
+    //Set Google Ads
     private fun adsSetting(){
         MobileAds.initialize(this){}
         val adRequest = AdRequest.Builder().build()

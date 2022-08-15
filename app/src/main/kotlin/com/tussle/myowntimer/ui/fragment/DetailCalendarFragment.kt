@@ -10,11 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kizitonwose.calendarview.model.CalendarDay
+import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
+import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.CalendarDayLayoutBinding
+import com.tussle.myowntimer.databinding.CalendarHeadLayoutBinding
 import com.tussle.myowntimer.databinding.DetailCalendarFrameBinding
 import com.tussle.myowntimer.ui.adapter.DetailCalendarRecyclerAdapter
 import com.tussle.myowntimer.ui.adapter.DetailTodoRecyclerAdapter
@@ -46,11 +49,12 @@ class DetailCalendarFragment : Fragment() {
         class DayViewContainer(view: View) : ViewContainer(view) {
             val textView = CalendarDayLayoutBinding.bind(view).calendarDayText
         }
+        class MonthHeaderContainer(view : View) : ViewContainer(view){
+            val yearMonth = CalendarHeadLayoutBinding.bind(view).headYearMonth
+        }
         binding.calendarView.dayBinder = object : DayBinder<DayViewContainer> {
-            // Called only when a new container is needed.
             override fun create(view: View) = DayViewContainer(view)
 
-            // Called every time we need to reuse a container.
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.textView.text = day.date.dayOfMonth.toString()
                 if (day.owner == DayOwner.THIS_MONTH) {
@@ -58,6 +62,13 @@ class DetailCalendarFragment : Fragment() {
                 } else {
                     container.textView.setTextColor(Color.GRAY)
                 }
+            }
+        }
+        binding.calendarView.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthHeaderContainer>{
+            override fun create(view: View): MonthHeaderContainer = MonthHeaderContainer(view)
+
+            override fun bind(container: MonthHeaderContainer, month: CalendarMonth) {
+                container.yearMonth.text = month.yearMonth.toString()
             }
         }
         return binding.root

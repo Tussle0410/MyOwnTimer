@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <Chronometer
-            android:id="@+id/chronometer2"
+            android:id="@+id/countUp_chronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:countDown="false"
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/countUp_startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -36,18 +36,18 @@
             android:fontFamily="@font/font_main"
             android:textSize="20sp"
             android:text="@string/txt_start"
-            app:layout_constraintEnd_toEndOf="@+id/chronometer2"
-            app:layout_constraintStart_toStartOf="@+id/chronometer2"
-            app:layout_constraintTop_toBottomOf="@+id/chronometer2" />
+            app:layout_constraintEnd_toEndOf="@+id/countUp_chronometer"
+            app:layout_constraintStart_toStartOf="@+id/countUp_chronometer"
+            app:layout_constraintTop_toBottomOf="@+id/countUp_chronometer" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/backgroundTransparency"
             android:src="@drawable/icon_refresh"
-            app:layout_constraintBottom_toBottomOf="@+id/button2"
-            app:layout_constraintStart_toEndOf="@+id/button2"
-            app:layout_constraintTop_toTopOf="@+id/button2" />
+            app:layout_constraintBottom_toBottomOf="@+id/countUp_startButton"
+            app:layout_constraintStart_toEndOf="@+id/countUp_startButton"
+            app:layout_constraintTop_toTopOf="@+id/countUp_startButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
