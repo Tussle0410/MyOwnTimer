@@ -1,13 +1,11 @@
 package com.tussle.myowntimer.model
 
-
 data class ViewPagerModel(
     val title : String,
-    val goalTodo : String,
-    val allTodo : String,
-    val todo1 : String,
-    val todo2 : String,
-    val todo3 : String,
+    var goalTodo : String,
+    var allTodo : String,
+    val todo : MutableList<String?>,
+    val todoSuccess : MutableList<Boolean?>,
     val todayTime : String,
     val weekendTime : String,
     val monthTime : String,

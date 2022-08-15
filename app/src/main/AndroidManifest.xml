@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".sharedPreference.GlobalApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name_eng"
         android:roundIcon="@mipmap/ic_launcher_round"
