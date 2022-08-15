@@ -6,6 +6,7 @@ import com.tussle.myowntimer.model.DB.DB
 
 class GlobalApplication : Application() {
     companion object{
+        lateinit var prefs : PreferenceUtil
         lateinit var appInstance : GlobalApplication
             private set
 
@@ -15,6 +16,8 @@ class GlobalApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        prefs = PreferenceUtil(applicationContext)
+
         appInstance = this
         databaseInstance = Room.databaseBuilder(
             appInstance.applicationContext,
