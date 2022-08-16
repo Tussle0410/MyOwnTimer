@@ -18,6 +18,9 @@ interface DAO {
     @Query("SELECT * FROM Title")
     suspend fun getAll() : List<Title>
 
+    @Query("SELECT COUNT(title) FROM Title")
+    suspend fun getTitleCount() : Int
+
     @Insert
     suspend fun todoAdd(todo : Todo)
 

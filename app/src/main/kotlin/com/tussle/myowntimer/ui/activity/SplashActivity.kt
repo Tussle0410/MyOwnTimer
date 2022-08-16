@@ -7,12 +7,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.SplashPageBinding
 import com.tussle.myowntimer.event.EventObserver
+import com.tussle.myowntimer.model.DB.Repo
+import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.viewmodel.SplashViewModel
 import org.jetbrains.anko.startActivity
 
 class SplashActivity : AppCompatActivity() {
     private val viewModel : SplashViewModel by lazy {
-        ViewModelProvider(this).get(SplashViewModel::class.java)
+        val factory = RepoFactory(Repo())
+        ViewModelProvider(this,factory).get(SplashViewModel::class.java)
     }
     private lateinit var binding : SplashPageBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,10 +23,10 @@ class SplashActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.splash_page)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.splashStart()
         viewModel.splashEvent.observe(this,EventObserver{
             startActivity<MainActivity>()
             finish()
         })
+        viewModel.splashStart()
     }
 }
