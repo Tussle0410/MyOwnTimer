@@ -31,6 +31,14 @@ class DetailActivity : AppCompatActivity() {
             changeFragment(it!!)
         })
     }
+    override fun onPause() {
+        super.onPause()
+        viewModel.onPauseStart()
+    }
+    override fun onResume() {
+        super.onResume()
+        viewModel.onResumeStart()
+    }
     //Set Google Ads
     private fun adsSetting(){
         MobileAds.initialize(this){}

@@ -15,19 +15,18 @@
             android:id="@+id/countUp_chronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:countDown="false"
-            android:fontFamily="@font/font_splash"
+            android:fontFamily="@font/font_main"
             android:format="00:%s"
             android:textColor="@color/black"
             android:textSize="50sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/countUp_startButton"
+            android:onClick="@{()->viewModel.countUpStart()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -41,6 +40,7 @@
             app:layout_constraintTop_toBottomOf="@+id/countUp_chronometer" />
 
         <ImageButton
+            android:id="@+id/countUp_resetButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/backgroundTransparency"

@@ -13,6 +13,9 @@ class DetailViewModel : ViewModel() {
     private val _countUpButtonEvent = MutableLiveData<Event<Boolean>>()
     private val _countDownButtonEvent = MutableLiveData<Event<Boolean>>()
     private val _countUpEvent = MutableLiveData<Boolean>()
+    private val _onResumeEvent = MutableLiveData<Event<Boolean>>()
+    private val _onPauseEVent = MutableLiveData<Event<Boolean>>()
+    private var countUpCheck : Boolean = false
     val detailFragment : LiveData<DetailNaviMenu>
         get() = _detailFragment
     val countUpButtonEvent : LiveData<Event<Boolean>>
@@ -21,7 +24,14 @@ class DetailViewModel : ViewModel() {
         get() = _countDownButtonEvent
     val countUpEvent : LiveData<Boolean>
         get() = _countUpEvent
-    var mStartTime : Long = 0L
+    val onResumeEvent : LiveData<Event<Boolean>>
+        get() = _onResumeEvent
+    val onPauseEvent : LiveData<Event<Boolean>>
+        get() = _onPauseEVent
+    var pauseTime : Long = 0L
+    init {
+        _countUpButtonEvent.value = Event(true)
+    }
     //Detail Page Bottom Menu Click Listener
     val bottomMenuClickListener =
         NavigationBarView.OnItemSelectedListener { item ->
@@ -57,5 +67,17 @@ class DetailViewModel : ViewModel() {
             _countDownButtonEvent.value = Event(true)
         }
     }
-
+    //CountUp Start
+    fun countUpStart(){
+        _countUpEvent.value = countUpCheck
+        countUpCheck = countUpCheck.not()
+    }
+    //onResume Event Change
+    fun onResumeStart(){
+        _onResumeEvent.value = Event(true)
+    }
+    //onPause Event Change
+    fun onPauseStart(){
+        _onPauseEVent.value = Event(true)
+    }
 }

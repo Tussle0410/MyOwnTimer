@@ -25,10 +25,6 @@ class DetailTimerFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = requireActivity()
         initFrame()
-        return binding.root
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         viewModel.countUpButtonEvent.observe(requireActivity(),EventObserver{
             if(it){
                 getCountUpFrame()
@@ -43,6 +39,10 @@ class DetailTimerFragment : Fragment() {
                 setCountUpStroke(false)
             }
         })
+        return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
     private fun setCountDownStroke(check : Boolean){
         val shape = resources.getDrawable(R.drawable.countdown_border) as GradientDrawable

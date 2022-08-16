@@ -16,9 +16,11 @@ import com.tussle.myowntimer.databinding.MainPageBinding
 import com.tussle.myowntimer.event.EventObserver
 import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DB.RepoFactory
+import com.tussle.myowntimer.sharedPreference.GlobalApplication
 import com.tussle.myowntimer.ui.adapter.MainViewPagerAdapter
 import com.tussle.myowntimer.viewmodel.MainViewModel
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
     private val viewModel : MainViewModel by lazy {
@@ -56,7 +58,12 @@ class MainActivity : AppCompatActivity() {
                 .setTitle("목표 추가하기!")
                 .setView(bindingDialog.root)
                 .setPositiveButton("추가",DialogInterface.OnClickListener { _, _ ->
-                    viewModel.insertTitle(bindingDialog.dialogTitle.text.toString())
+                    val titleCount = GlobalApplication.prefs.titleGetInt("titleCount",0)
+                    if(titleCount < 10){
+                        GlobalApplication.prefs.titleSetInt("titleCount",titleCount+1)
+                        viewModel.insertTitle(bindingDialog.dialogTitle.text.toString())
+                    }else
+                        toast("목표를 10개 이상 초과할 수 없습니다.")
                 })
                 .show()
         }

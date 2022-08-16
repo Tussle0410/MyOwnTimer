@@ -2,9 +2,11 @@ package com.tussle.myowntimer.ui.fragment
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Chronometer
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -22,27 +24,36 @@ class DetailTimerCountUpFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.detail_timer_countup_frame,container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = requireActivity()
-        viewModel.countUpEvent.observe(requireActivity(), Observer {
-            if(!it){
-                binding.countUpChronometer.start()
-                binding.countUpStartButton.text = resources.getString(R.string.txt_stop)
-            }else{
-                binding.countUpChronometer.stop()
-                binding.countUpStartButton.text = resources.getString(R.string.txt_start)
-                viewModel.mStartTime = binding.countUpChronometer.base
-            }
-        })
+        setChronometer()
+        setButton()
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
-    private fun initChronometer(){
-        if(viewModel.mStartTime == 0L){
-            val startTime = SystemClock.elapsedRealtime()
-            viewModel.mStartTime = startTime
-            binding.countUpChronometer.base = startTime
-        }else
-            binding.countUpChronometer.base = viewModel.mStartTime
+    private fun setButton(){
+        viewModel.countUpEvent.observe(requireActivity(), Observer {
+            if(!it){
+                binding.countUpChronometer.base = SystemClock.elapsedRealtime() + viewModel.pauseTime
+                binding.countUpChronometer.start()
+                binding.countUpStartButton.text = resources.getString(R.string.txt_stop)
+            }else{
+                viewModel.pauseTime = binding.countUpChronometer.base - SystemClock.elapsedRealtime()
+                binding.countUpChronometer.stop()
+                binding.countUpStartButton.text = resources.getString(R.string.txt_start)
+            }
+        })
+    }
+    private fun setChronometer(){
+        binding.countUpChronometer.setOnChronometerTickListener {
+            val time = (SystemClock.elapsedRealtime() - it.base)/1000
+            val h = time/3600
+            val m = (time/60)%60
+            val s = time%60
+            val txtH = if(h<10) "0$h" else h.toString()
+            val txtM = if(m<10) "0$m" else m.toString()
+            val txtS = if(s<10) "0$s" else s.toString()
+            it.format = "$txtH:$txtM:$txtS"
+        }
     }
 }
