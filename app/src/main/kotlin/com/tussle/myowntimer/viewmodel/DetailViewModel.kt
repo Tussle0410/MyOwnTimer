@@ -28,7 +28,7 @@ class DetailViewModel : ViewModel() {
         get() = _onResumeEvent
     val onPauseEvent : LiveData<Event<Boolean>>
         get() = _onPauseEVent
-    var pauseTime : Long = 0L
+    var countUpPauseTime : Long = 0L
     init {
         _countUpButtonEvent.value = Event(true)
     }

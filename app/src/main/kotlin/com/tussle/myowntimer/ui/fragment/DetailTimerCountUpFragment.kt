@@ -34,15 +34,21 @@ class DetailTimerCountUpFragment : Fragment() {
     private fun setButton(){
         viewModel.countUpEvent.observe(requireActivity(), Observer {
             if(!it){
-                binding.countUpChronometer.base = SystemClock.elapsedRealtime() + viewModel.pauseTime
+                binding.countUpChronometer.base = SystemClock.elapsedRealtime() + viewModel.countUpPauseTime
                 binding.countUpChronometer.start()
                 binding.countUpStartButton.text = resources.getString(R.string.txt_stop)
+                binding.countUpResetButton.visibility = View.INVISIBLE
             }else{
-                viewModel.pauseTime = binding.countUpChronometer.base - SystemClock.elapsedRealtime()
+                viewModel.countUpPauseTime = binding.countUpChronometer.base - SystemClock.elapsedRealtime()
                 binding.countUpChronometer.stop()
                 binding.countUpStartButton.text = resources.getString(R.string.txt_start)
+                binding.countUpResetButton.visibility = View.VISIBLE
             }
         })
+        binding.countUpResetButton.setOnClickListener {
+            binding.countUpChronometer.base = SystemClock.elapsedRealtime()
+            viewModel.countUpPauseTime = 0L
+        }
     }
     private fun setChronometer(){
         binding.countUpChronometer.setOnChronometerTickListener {
