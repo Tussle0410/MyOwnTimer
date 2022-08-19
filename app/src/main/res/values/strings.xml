@@ -23,6 +23,11 @@
     <string name="txt_stopwatch">스톱워치</string>
     <string name="txt_start">시 작</string>
     <string name="txt_stop">정 지</string>
+    <string name="txt_setTime">시간 설정</string>
+    <string name="txt_hour">시</string>
+    <string name="txt_min">분</string>
+    <string name="txt_second">초</string>
+    <string name="txt_initTime">00:00:00</string>
     //CalendarFragment Weekend Text
     <string name="txt_sunDay">SUN</string>
     <string name="txt_monDay">MON</string>

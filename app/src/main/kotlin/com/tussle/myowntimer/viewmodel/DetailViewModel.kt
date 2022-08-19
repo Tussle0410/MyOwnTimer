@@ -13,9 +13,9 @@ class DetailViewModel : ViewModel() {
     private val _countUpButtonEvent = MutableLiveData<Event<Boolean>>()
     private val _countDownButtonEvent = MutableLiveData<Event<Boolean>>()
     private val _countUpEvent = MutableLiveData<Boolean>()
-    private val _onResumeEvent = MutableLiveData<Event<Boolean>>()
-    private val _onPauseEVent = MutableLiveData<Event<Boolean>>()
+    private val _countDownEvent = MutableLiveData<Boolean>()
     private var countUpCheck : Boolean = false
+    private var countDownCheck : Boolean = false
     val detailFragment : LiveData<DetailNaviMenu>
         get() = _detailFragment
     val countUpButtonEvent : LiveData<Event<Boolean>>
@@ -24,11 +24,11 @@ class DetailViewModel : ViewModel() {
         get() = _countDownButtonEvent
     val countUpEvent : LiveData<Boolean>
         get() = _countUpEvent
-    val onResumeEvent : LiveData<Event<Boolean>>
-        get() = _onResumeEvent
-    val onPauseEvent : LiveData<Event<Boolean>>
-        get() = _onPauseEVent
+    val countDownEvent : LiveData<Boolean>
+        get() = _countDownEvent
     var countUpPauseTime : Long = 0L
+    var countDownPauseTime : Long = 0L
+    var countDownTime : Long = 0L
     init {
         _countUpButtonEvent.value = Event(true)
     }
@@ -72,12 +72,17 @@ class DetailViewModel : ViewModel() {
         _countUpEvent.value = countUpCheck
         countUpCheck = countUpCheck.not()
     }
-    //onResume Event Change
-    fun onResumeStart(){
-        _onResumeEvent.value = Event(true)
+    //CountDown Start
+    fun countDownStart(){
+        if(countDownTime!=0L){
+            _countDownEvent.value = countDownCheck
+            countDownCheck = countDownCheck.not()
+        }
     }
-    //onPause Event Change
-    fun onPauseStart(){
-        _onPauseEVent.value = Event(true)
+    //CountDown End
+    fun countDownEnd(){
+        countDownTime = 0L
+        _countDownEvent.value = countDownCheck
+        countDownCheck = countDownCheck.not()
     }
 }

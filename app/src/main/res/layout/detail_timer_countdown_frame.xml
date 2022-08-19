@@ -11,46 +11,75 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:indeterminate="false"
-            android:progress="64"
-            android:progressDrawable="@drawable/countdown_progressbar"
-            android:progressTint="@color/main_color"
+        <TextView
+            android:id="@+id/countDown_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_main"
+            android:text="@string/txt_initTime"
+            android:textColor="@color/black"
+            android:textSize="50sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/progressBar"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Chronometer
-            android:id="@+id/chronometer3"
+            android:id="@+id/countDown_Chronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:countDown="true"
             android:fontFamily="@font/font_main"
-            android:format="00:%s"
             android:textColor="@color/black"
             android:textSize="50sp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
+            android:id="@+id/countDown_StartButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:onClick="@{()->viewModel.countDownStart()}"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="@color/main_color"
             android:fontFamily="@font/font_main"
             android:padding="10dp"
             android:text="@string/txt_start"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/chronometer3"
-            app:layout_constraintStart_toStartOf="@+id/chronometer3" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/setTime_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/main_color"
+            android:text="@string/txt_setTime"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/font_main"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/countdown_progressbar"
+            android:progressTint="@color/main_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

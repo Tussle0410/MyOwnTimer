@@ -87,6 +87,6 @@ class DetailTimerFragment : Fragment() {
     }
     companion object{
         fun getInstance()
-            = DetailTimerFragment()
+                = DetailTimerFragment()
     }
 }
