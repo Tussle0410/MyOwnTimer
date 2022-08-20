@@ -12,19 +12,16 @@ interface DAO {
     @Insert
     suspend fun titleAdd(title: Title)
 
-    @Query("DELETE FROM Title")
-    suspend fun deleteAll()
-
-    @Query("SELECT * FROM Title")
-    suspend fun getAll() : List<Title>
+    @Insert
+    suspend fun todoAdd(todo : Todo)
 
     @Query("SELECT COUNT(title) FROM Title")
     suspend fun getTitleCount() : Int
 
-    @Insert
-    suspend fun todoAdd(todo : Todo)
-
     @Query("SELECT * FROM Title LEFT OUTER JOIN Todo ON Title.title == Todo.todo_title")
     suspend fun getInfo() : List<TitleAndTodo>?
+
+    @Query("SELECT * FROM Todo WHERE todo_title == :title")
+    suspend fun getTodo(title : String) :List<Todo>
 }
 
