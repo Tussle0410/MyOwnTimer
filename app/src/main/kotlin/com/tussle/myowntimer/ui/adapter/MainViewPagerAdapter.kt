@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.MainViewpagerItemBinding
 import com.tussle.myowntimer.model.ViewPagerModel
+import com.tussle.myowntimer.sharedPreference.GlobalApplication
 import com.tussle.myowntimer.ui.activity.DetailActivity
 
 class MainViewPagerAdapter(val data : MutableList<ViewPagerModel>, context : Context) : RecyclerView.Adapter<MainViewPagerAdapter.PageViewHolder>() {
@@ -44,6 +45,7 @@ class MainViewPagerAdapter(val data : MutableList<ViewPagerModel>, context : Con
             binding.timeMonth.text = item.monthTime
             binding.timeTotal.text = item.totalTime
             binding.viewPager.setOnClickListener { view ->
+                GlobalApplication.prefs.titleSetString("title", item.title)
                 val intent = Intent(view.context, DetailActivity::class.java)
                 view.context.startActivity(intent)
             }

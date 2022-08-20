@@ -11,13 +11,11 @@ class Repo{
     suspend fun insert(title: Title){
         dbInstance.titleAdd(title)
     }
-    suspend fun getAll() = dbInstance.getAll()
     suspend fun getInfo() = dbInstance.getInfo()
     suspend fun getTitleCount() = dbInstance.getTitleCount()
     suspend fun todoInsert(todo : Todo){
         dbInstance.todoAdd(todo)
     }
-    suspend fun deleteAll(){
-        dbInstance.deleteAll()
-    }
+    suspend fun getTodo(title:String)=dbInstance.getTodo(title)
+
 }

@@ -19,6 +19,8 @@
     <string name="txt_todo">할 일</string>
     <string name="txt_calendar">달력</string>
     <string name="txt_chart">통계</string>
+    //TodoFragment Frame Text
+    <string name="txt_todo_hint">할 일을 적어주세요.</string>
     //TimerFragment Frame Text
     <string name="txt_stopwatch">스톱워치</string>
     <string name="txt_start">시 작</string>

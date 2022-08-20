@@ -6,16 +6,24 @@ import androidx.lifecycle.ViewModel
 import com.google.android.material.navigation.NavigationBarView
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.event.Event
+import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DetailNaviMenu
+import com.tussle.myowntimer.model.Todo
+import com.tussle.myowntimer.sharedPreference.GlobalApplication
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(val repo : Repo) : ViewModel() {
     private val _detailFragment = MutableLiveData(DetailNaviMenu.Timer)
     private val _countUpButtonEvent = MutableLiveData<Event<Boolean>>()
     private val _countDownButtonEvent = MutableLiveData<Event<Boolean>>()
     private val _countUpEvent = MutableLiveData<Boolean>()
     private val _countDownEvent = MutableLiveData<Boolean>()
+    private val _insertTodoEvent = MutableLiveData<Event<Boolean>>()
     private var countUpCheck : Boolean = false
     private var countDownCheck : Boolean = false
+    var todoInfo = MutableLiveData<List<Todo>>()
     val detailFragment : LiveData<DetailNaviMenu>
         get() = _detailFragment
     val countUpButtonEvent : LiveData<Event<Boolean>>
@@ -26,9 +34,16 @@ class DetailViewModel : ViewModel() {
         get() = _countUpEvent
     val countDownEvent : LiveData<Boolean>
         get() = _countDownEvent
+    val insertTodoEvent : LiveData<Event<Boolean>>
+        get() = _insertTodoEvent
+    //Date And Time Info Set
     var countUpPauseTime : Long = 0L
     var countDownPauseTime : Long = 0L
     var countDownTime : Long = 0L
+    val year = GlobalApplication.prefs.timeGetString("year","")
+    val month = GlobalApplication.prefs.timeGetString("month","")
+    val day = GlobalApplication.prefs.timeGetString("day","")
+    val dayOfWeek = GlobalApplication.prefs.timeGetString("dayOfWeek","") + "요일"
     init {
         _countUpButtonEvent.value = Event(true)
     }
@@ -65,6 +80,14 @@ class DetailViewModel : ViewModel() {
         if(_countDownButtonEvent.value != Event(true)){
             _countUpButtonEvent.value = Event(false)
             _countDownButtonEvent.value = Event(true)
+        }
+    }
+    //getTodoInfo Method
+    fun getTodoInfo(title : String){
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.getTodo(title).let {
+                todoInfo.postValue(it)
+            }
         }
     }
     //CountUp Start

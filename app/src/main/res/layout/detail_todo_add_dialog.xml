@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="20">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/gray"
+            android:fontFamily="@font/font_main"
+            android:hint="@string/txt_todo_hint"
+            android:textColor="@color/black"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:maxLength="20"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorLink="@color/black"
+        android:fontFamily="@font/font_main"
+        android:textSize="20sp"
+        android:layoutDirection="rtl"
+        android:gravity="start|center"
+        android:text="현재 성공 여부" />
+
+</LinearLayout>

@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tussle.myowntimer.databinding.DetailTodoItemBinding
+import com.tussle.myowntimer.model.Todo
 
-class DetailTodoRecyclerAdapter(val data : MutableList<String>) : RecyclerView.Adapter<DetailTodoRecyclerAdapter.ToDoViewHolder>(){
+class DetailTodoRecyclerAdapter(val data : List<Todo>) : RecyclerView.Adapter<DetailTodoRecyclerAdapter.ToDoViewHolder>(){
     inner class ToDoViewHolder(private val binding : DetailTodoItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun setting(todo : String){
-            binding.todoTxt.text = todo
+        fun setting(todo : Todo){
+            binding.todoTxt.text = todo.todo
+            binding.todoCheckBox.isChecked = todo.success!!
         }
     }
 
