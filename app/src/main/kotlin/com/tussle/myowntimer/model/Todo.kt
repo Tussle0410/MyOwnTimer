@@ -1,6 +1,5 @@
 package com.tussle.myowntimer.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
@@ -19,5 +18,5 @@ data class Todo(
     val todo : String?,
     val success : Boolean? = false,
     @PrimaryKey(autoGenerate = true)
-    val id : Int?
+    var id : Int? = 0
 )

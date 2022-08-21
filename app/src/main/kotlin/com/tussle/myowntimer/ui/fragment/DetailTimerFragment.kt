@@ -13,11 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.DetailTimerFrameBinding
 import com.tussle.myowntimer.event.EventObserver
+import com.tussle.myowntimer.model.DB.Repo
+import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.viewmodel.DetailViewModel
 
 class DetailTimerFragment : Fragment() {
     private val viewModel : DetailViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
+        val factory = RepoFactory(Repo())
+        ViewModelProvider(requireActivity(),factory).get(DetailViewModel::class.java)
     }
     private lateinit var binding : DetailTimerFrameBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

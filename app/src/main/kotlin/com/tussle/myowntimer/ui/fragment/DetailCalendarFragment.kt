@@ -19,6 +19,8 @@ import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.CalendarDayLayoutBinding
 import com.tussle.myowntimer.databinding.CalendarHeadLayoutBinding
 import com.tussle.myowntimer.databinding.DetailCalendarFrameBinding
+import com.tussle.myowntimer.model.DB.Repo
+import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.ui.adapter.DetailCalendarRecyclerAdapter
 import com.tussle.myowntimer.ui.adapter.DetailTodoRecyclerAdapter
 import com.tussle.myowntimer.viewmodel.DetailViewModel
@@ -30,7 +32,8 @@ class DetailCalendarFragment : Fragment() {
     private val test = mutableListOf("할일1", "할일2", "할일3", "할일4","할일5","할일6","할일7","할일8",
         "할일9", "할일10")
     private val viewModel : DetailViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
+        val factory = RepoFactory(Repo())
+        ViewModelProvider(requireActivity(),factory).get(DetailViewModel::class.java)
     }
     private lateinit var binding : DetailCalendarFrameBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

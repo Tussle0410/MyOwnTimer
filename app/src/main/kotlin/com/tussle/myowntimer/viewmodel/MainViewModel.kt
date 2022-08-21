@@ -19,7 +19,7 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
     //DB Title Info Insert And MutableList Add
     fun insertTitle(title : String){
         CoroutineScope(Dispatchers.IO).launch {
-            repo.insert(Title(title))
+            repo.titleInsert(Title(title))
         }
         addTitle(title)
     }

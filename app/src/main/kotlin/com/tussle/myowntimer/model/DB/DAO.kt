@@ -12,8 +12,8 @@ interface DAO {
     @Insert
     suspend fun titleAdd(title: Title)
 
-    @Insert
-    suspend fun todoAdd(todo : Todo)
+    @Query("INSERT INTO Todo(todo_title, todo, success) VALUES(:title, :todo, :success)")
+    suspend fun todoAdd(title : String,todo : String, success:Boolean)
 
     @Query("SELECT COUNT(title) FROM Title")
     suspend fun getTitleCount() : Int
@@ -22,6 +22,6 @@ interface DAO {
     suspend fun getInfo() : List<TitleAndTodo>?
 
     @Query("SELECT * FROM Todo WHERE todo_title == :title")
-    suspend fun getTodo(title : String) :List<Todo>
+    suspend fun getTodo(title : String) :MutableList<Todo>
 }
 

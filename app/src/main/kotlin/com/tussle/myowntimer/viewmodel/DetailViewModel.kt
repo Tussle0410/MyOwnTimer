@@ -12,18 +12,21 @@ import com.tussle.myowntimer.model.Todo
 import com.tussle.myowntimer.sharedPreference.GlobalApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class DetailViewModel(val repo : Repo) : ViewModel() {
+class DetailViewModel(private val repo : Repo) : ViewModel() {
     private val _detailFragment = MutableLiveData(DetailNaviMenu.Timer)
     private val _countUpButtonEvent = MutableLiveData<Event<Boolean>>()
     private val _countDownButtonEvent = MutableLiveData<Event<Boolean>>()
     private val _countUpEvent = MutableLiveData<Boolean>()
     private val _countDownEvent = MutableLiveData<Boolean>()
     private val _insertTodoEvent = MutableLiveData<Event<Boolean>>()
+    private val _getTodoEvent = MutableLiveData<Event<Boolean>>()
     private var countUpCheck : Boolean = false
     private var countDownCheck : Boolean = false
-    var todoInfo = MutableLiveData<List<Todo>>()
+    var title : String
+    var todoInfo = MutableLiveData<MutableList<Todo>>()
     val detailFragment : LiveData<DetailNaviMenu>
         get() = _detailFragment
     val countUpButtonEvent : LiveData<Event<Boolean>>
@@ -36,16 +39,25 @@ class DetailViewModel(val repo : Repo) : ViewModel() {
         get() = _countDownEvent
     val insertTodoEvent : LiveData<Event<Boolean>>
         get() = _insertTodoEvent
+    val getTodoEvent : LiveData<Event<Boolean>>
+        get() = _getTodoEvent
     //Date And Time Info Set
     var countUpPauseTime : Long = 0L
     var countDownPauseTime : Long = 0L
     var countDownTime : Long = 0L
-    val year = GlobalApplication.prefs.timeGetString("year","")
-    val month = GlobalApplication.prefs.timeGetString("month","")
-    val day = GlobalApplication.prefs.timeGetString("day","")
-    val dayOfWeek = GlobalApplication.prefs.timeGetString("dayOfWeek","") + "요일"
+    var year : String
+    var month : String
+    var day : String
+    var dayOfWeek : String
     init {
         _countUpButtonEvent.value = Event(true)
+        with(GlobalApplication.prefs){
+            title = titleGetString("title","")
+            year = timeGetString("year","")
+            month = timeGetString("month","")
+            day = timeGetString("day","")
+            dayOfWeek = timeGetString("dayOfWeek","") + "요일"
+        }
     }
     //Detail Page Bottom Menu Click Listener
     val bottomMenuClickListener =
@@ -83,12 +95,26 @@ class DetailViewModel(val repo : Repo) : ViewModel() {
         }
     }
     //getTodoInfo Method
-    fun getTodoInfo(title : String){
+    fun getTodoInfo(){
         CoroutineScope(Dispatchers.IO).launch {
             repo.getTodo(title).let {
                 todoInfo.postValue(it)
             }
+            _getTodoEvent.postValue(Event(true))
         }
+    }
+    //todoInsert Method
+    fun insertTodo(todo_txt : String, success : Boolean){
+        val todo = Todo(title, todo_txt, success)
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.todoInsert(title, todo_txt, success)
+        }
+        addTodo(todo)
+    }
+    //Add todoInfo List
+    private fun addTodo(todo : Todo){
+        todoInfo.value!!.add(todo)
+        _insertTodoEvent.value = Event(true)
     }
     //CountUp Start
     fun countUpStart(){

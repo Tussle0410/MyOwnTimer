@@ -16,11 +16,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.DetailTimerCountdownFrameBinding
 import com.tussle.myowntimer.databinding.DetailTimerCountdownSetTimeBinding
+import com.tussle.myowntimer.model.DB.Repo
+import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.viewmodel.DetailViewModel
 
 class DetailTimerCountDownFragment : Fragment() {
     private val viewModel : DetailViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
+        val factory = RepoFactory(Repo())
+        ViewModelProvider(requireActivity(),factory).get(DetailViewModel::class.java)
     }
     private lateinit var binding : DetailTimerCountdownFrameBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -14,6 +14,7 @@
         app:counterEnabled="true"
         app:counterMaxLength="20">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/todo_dialog_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/gray"
@@ -25,13 +26,14 @@
             android:maxLength="20"/>
     </com.google.android.material.textfield.TextInputLayout>
     <CheckBox
+        android:id="@+id/todo_dialog_success"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColorLink="@color/black"
         android:fontFamily="@font/font_main"
         android:textSize="20sp"
+        android:checked="false"
         android:layoutDirection="rtl"
         android:gravity="start|center"
-        android:text="현재 성공 여부" />
-
+        android:text="@string/txt_todo_dialog_success" />
 </LinearLayout>

@@ -21,6 +21,7 @@
     <string name="txt_chart">통계</string>
     //TodoFragment Frame Text
     <string name="txt_todo_hint">할 일을 적어주세요.</string>
+    <string name="txt_todo_dialog_success">현재 성공 여부</string>
     //TimerFragment Frame Text
     <string name="txt_stopwatch">스톱워치</string>
     <string name="txt_start">시 작</string>

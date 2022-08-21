@@ -17,11 +17,14 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.DetailChartFrameBinding
+import com.tussle.myowntimer.model.DB.Repo
+import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.viewmodel.DetailViewModel
 
 class DetailChartFragment : Fragment() {
     private val viewModel : DetailViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
+        val factory = RepoFactory(Repo())
+        ViewModelProvider(requireActivity(),factory).get(DetailViewModel::class.java)
     }
     private val entries = ArrayList<BarEntry>()
     private lateinit var binding : DetailChartFrameBinding

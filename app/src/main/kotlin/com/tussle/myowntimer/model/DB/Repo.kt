@@ -8,14 +8,14 @@ import com.tussle.myowntimer.sharedPreference.GlobalApplication
 class Repo{
     private val dbInstance = GlobalApplication.databaseInstance.dao()
 
-    suspend fun insert(title: Title){
+    suspend fun titleInsert(title: Title){
         dbInstance.titleAdd(title)
+    }
+    suspend fun todoInsert(title : String, todo : String, success : Boolean ){
+        dbInstance.todoAdd(title,todo,success)
     }
     suspend fun getInfo() = dbInstance.getInfo()
     suspend fun getTitleCount() = dbInstance.getTitleCount()
-    suspend fun todoInsert(todo : Todo){
-        dbInstance.todoAdd(todo)
-    }
     suspend fun getTodo(title:String)=dbInstance.getTodo(title)
 
 }

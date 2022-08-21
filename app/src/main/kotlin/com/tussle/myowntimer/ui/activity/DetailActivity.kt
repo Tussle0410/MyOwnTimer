@@ -9,6 +9,8 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.DetailPageBinding
+import com.tussle.myowntimer.model.DB.Repo
+import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.model.DetailNaviMenu
 import com.tussle.myowntimer.ui.fragment.DetailCalendarFragment
 import com.tussle.myowntimer.ui.fragment.DetailChartFragment
@@ -18,7 +20,8 @@ import com.tussle.myowntimer.viewmodel.DetailViewModel
 
 class DetailActivity : AppCompatActivity() {
     private val viewModel : DetailViewModel by lazy {
-        ViewModelProvider(this).get(DetailViewModel::class.java)
+        val factory = RepoFactory(Repo())
+        ViewModelProvider(this, factory).get(DetailViewModel::class.java)
     }
     private lateinit var binding : DetailPageBinding
     override fun onCreate(savedInstanceState: Bundle?) {

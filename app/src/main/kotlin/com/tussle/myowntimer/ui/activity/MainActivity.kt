@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                     val titleCount = GlobalApplication.prefs.titleGetInt("titleCount",0)
                     if(titleCount < 10){
                         GlobalApplication.prefs.titleSetInt("titleCount",titleCount+1)
-                        viewModel.insertTitle(bindingDialog.dialogTitle.text.toString())
+                        viewModel.insertTitle(bindingDialog.mainDialogTitle.text.toString())
                     }else
                         toast("목표를 10개 이상 초과할 수 없습니다.")
                 })

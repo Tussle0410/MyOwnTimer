@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tussle.myowntimer.databinding.DetailTodoItemBinding
 import com.tussle.myowntimer.model.Todo
 
-class DetailTodoRecyclerAdapter(val data : List<Todo>) : RecyclerView.Adapter<DetailTodoRecyclerAdapter.ToDoViewHolder>(){
+class DetailTodoRecyclerAdapter(val data : MutableList<Todo>) : RecyclerView.Adapter<DetailTodoRecyclerAdapter.ToDoViewHolder>(){
     inner class ToDoViewHolder(private val binding : DetailTodoItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun setting(todo : Todo){
             binding.todoTxt.text = todo.todo
