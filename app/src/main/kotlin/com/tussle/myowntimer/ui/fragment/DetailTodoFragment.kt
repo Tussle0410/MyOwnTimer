@@ -3,29 +3,25 @@ package com.tussle.myowntimer.ui.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.DetailTodoAddDialogBinding
 import com.tussle.myowntimer.databinding.DetailTodoFrameBinding
 import com.tussle.myowntimer.event.EventObserver
 import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DB.RepoFactory
-import com.tussle.myowntimer.model.Todo
-import com.tussle.myowntimer.sharedPreference.GlobalApplication
 import com.tussle.myowntimer.ui.adapter.DetailTodoRecyclerAdapter
+import com.tussle.myowntimer.ui.listener.SuccessUpdate
 import com.tussle.myowntimer.viewmodel.DetailViewModel
 
-class DetailTodoFragment : Fragment() {
+class DetailTodoFragment : Fragment(), SuccessUpdate {
     private val viewModel : DetailViewModel by lazy {
         val factory = RepoFactory(Repo())
         ViewModelProvider(requireActivity(),factory).get(DetailViewModel::class.java)
@@ -46,11 +42,11 @@ class DetailTodoFragment : Fragment() {
         })
         return binding.root
     }
-
+    //TodoAddButton Setting
     private fun setAddButton(){
         binding.detailTodoAddButton.setOnClickListener {
-            if(viewModel.todoInfo.value!!.size >= 10){
-                Toast.makeText(requireContext(),"할 일을 10개 이상 만들 수 없습니다.", Toast.LENGTH_SHORT).show()
+            if(viewModel.todoInfo.value!!.size >= 5){
+                Toast.makeText(requireContext(),"할 일을 5개까지 만들 수 있습니다.", Toast.LENGTH_SHORT).show()
             }else{
                 val bindingDialog = DetailTodoAddDialogBinding.inflate(LayoutInflater.from(binding.root.context))
                 AlertDialog.Builder(requireActivity())
@@ -65,12 +61,17 @@ class DetailTodoFragment : Fragment() {
             }
         }
     }
+    //TodoRecyclerView Setting
     private fun toDoSetting(){
-        recyclerAdapter = DetailTodoRecyclerAdapter(viewModel.todoInfo.value!!)
+        recyclerAdapter = DetailTodoRecyclerAdapter(viewModel.todoInfo.value!!, this)
         with(binding.detailTodoRecycler){
             layoutManager = LinearLayoutManager(requireContext())
             adapter = recyclerAdapter
         }
+    }
+    //SuccessUpdate Interface Method
+    override fun SuccessUpdate(todo: String, success: Boolean) {
+        viewModel.todoSuccessUpdate(todo, success)
     }
     companion object{
         fun getInstance()

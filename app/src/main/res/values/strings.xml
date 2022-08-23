@@ -39,6 +39,7 @@
     <string name="txt_thuDay">THU</string>
     <string name="txt_friDay">FRI</string>
     <string name="txt_satDay">SAT</string>
+    <string name="txt_time">시 간</string>
     //SettingPage Text
     <string name="txt_setting">설 정</string>
     //ProfilePage Text

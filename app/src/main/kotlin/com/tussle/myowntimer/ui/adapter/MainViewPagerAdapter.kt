@@ -4,16 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.MainViewpagerItemBinding
 import com.tussle.myowntimer.model.ViewPagerModel
 import com.tussle.myowntimer.sharedPreference.GlobalApplication
 import com.tussle.myowntimer.ui.activity.DetailActivity
+import com.tussle.myowntimer.ui.listener.CheckCalendarTime
 
-class MainViewPagerAdapter(val data : MutableList<ViewPagerModel>, context : Context) : RecyclerView.Adapter<MainViewPagerAdapter.PageViewHolder>() {
+class MainViewPagerAdapter(val data : MutableList<ViewPagerModel>, context : Context, listener : CheckCalendarTime) : RecyclerView.Adapter<MainViewPagerAdapter.PageViewHolder>() {
     val successColor = context.getColor(R.color.successColor)
+    val mCallback = listener
     inner class PageViewHolder(private val binding : MainViewpagerItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun setting(item : ViewPagerModel){
             binding.title.text = item.title
@@ -46,6 +47,7 @@ class MainViewPagerAdapter(val data : MutableList<ViewPagerModel>, context : Con
             binding.timeTotal.text = item.totalTime
             binding.viewPager.setOnClickListener { view ->
                 GlobalApplication.prefs.titleSetString("title", item.title)
+                mCallback.checkCalendarTime(item.title)
                 val intent = Intent(view.context, DetailActivity::class.java)
                 view.context.startActivity(intent)
             }

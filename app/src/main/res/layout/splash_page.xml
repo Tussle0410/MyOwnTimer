@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/font_splash"
+            android:fontFamily="@font/font_main"
             android:text="@string/app_name_kor"
             android:textColor="@color/black"
             android:textSize="50sp"

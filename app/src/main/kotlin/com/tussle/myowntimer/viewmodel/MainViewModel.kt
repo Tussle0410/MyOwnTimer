@@ -1,14 +1,18 @@
 package com.tussle.myowntimer.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tussle.myowntimer.event.Event
 import com.tussle.myowntimer.model.*
 import com.tussle.myowntimer.model.DB.Repo
+import com.tussle.myowntimer.sharedPreference.GlobalApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainViewModel(private val repo : Repo) : ViewModel(){
     private val _insertEvent = MutableLiveData<Event<Boolean>>()
@@ -16,6 +20,8 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
         get() = _insertEvent
     val viewPagerInfo = MutableLiveData<MutableList<ViewPagerModel>>()
     val titleInfo = MutableLiveData<List<TitleAndTodo>>()
+    val continueDay = MutableLiveData<String>()
+    private lateinit var date : String
     //DB Title Info Insert And MutableList Add
     fun insertTitle(title : String){
         CoroutineScope(Dispatchers.IO).launch {
@@ -72,6 +78,35 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
                     }
                 }
             }
+        }
+    }
+    //Title CalenderTime Check
+    fun calendarTimeCheck(title : String){
+        CoroutineScope(Dispatchers.IO).launch {
+            if(repo.getCalendarTime(title, date).isEmpty()){
+                repo.calendarTimeInsert(title, date)
+                for (value in repo.getTodo(title)){
+                    repo.calendarTodoInsert(title, date, value.todo!!, value.success!!)
+                }
+            }
+        }
+    }
+    //Today Date Check Method
+    fun setDate(){
+        val format = SimpleDateFormat("yyyy-MM-dd 00:00:00", Locale.getDefault())
+        date = format.format(Calendar.getInstance().time)
+        val time = format.parse(date)!!.time
+        val previousTime = format.parse(GlobalApplication.prefs.timeGetString("date","1997-04-10 00:00:00"))!!.time
+        val dif = (time - previousTime) / (60*60*24*1000)
+        continueDay.value = GlobalApplication.prefs.timeGetInt("continue",0).toString()
+        if(dif>=1){
+            if(dif==1L){
+                val temp = continueDay.value!!.toInt()+1
+                GlobalApplication.prefs.timeSetInt("continue",temp)
+                continueDay.value = temp.toString()
+            }else
+                GlobalApplication.prefs.timeSetInt("continue",1)
+            GlobalApplication.prefs.timeSetString("date", date)
         }
     }
 }

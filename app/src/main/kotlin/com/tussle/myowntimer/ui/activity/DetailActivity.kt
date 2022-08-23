@@ -30,6 +30,7 @@ class DetailActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         adsSetting()
+        viewModel.setDate()
         viewModel.detailFragment.observe(this, Observer {
             changeFragment(it!!)
         })

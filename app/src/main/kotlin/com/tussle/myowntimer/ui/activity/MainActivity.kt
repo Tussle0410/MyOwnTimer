@@ -18,11 +18,12 @@ import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.sharedPreference.GlobalApplication
 import com.tussle.myowntimer.ui.adapter.MainViewPagerAdapter
+import com.tussle.myowntimer.ui.listener.CheckCalendarTime
 import com.tussle.myowntimer.viewmodel.MainViewModel
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CheckCalendarTime {
     private val viewModel : MainViewModel by lazy {
         val factory = RepoFactory(Repo())
         ViewModelProvider(this, factory).get(MainViewModel::class.java)
@@ -35,7 +36,17 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         initPage()
+    }
+    //Main Page Ads, ViewPager2... init
+    private fun initPage(){
         viewModel.getTitle()
+        viewModelSetting()
+        adsSetting()
+        setProfileAndSettingButton()
+        setAddButton()
+        viewModel.setDate()
+    }
+    private fun viewModelSetting(){
         viewModel.titleInfo.observe(this, Observer {
             viewModel.setList()
             pageSetting()
@@ -43,12 +54,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.insertEvent.observe(this,EventObserver{
             viewPagerAdapter.notifyDataSetChanged()
         })
-    }
-    //Main Page Ads, ViewPager2... init
-    private fun initPage(){
-        adsSetting()
-        setProfileAndSettingButton()
-        setAddButton()
     }
     //Set Main Page TitleAdd Button
     private fun setAddButton(){
@@ -79,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
     //Set ViewPager2
     private fun pageSetting(){
-        viewPagerAdapter = MainViewPagerAdapter(viewModel.viewPagerInfo.value!!,this)
+        viewPagerAdapter = MainViewPagerAdapter(viewModel.viewPagerInfo.value!!,this, this)
         with(binding.mainViewPager){
             offscreenPageLimit
             adapter = viewPagerAdapter
@@ -91,5 +96,9 @@ class MainActivity : AppCompatActivity() {
         MobileAds.initialize(this){}
         val adRequest = AdRequest.Builder().build()
         binding.mainAdView.loadAd(adRequest)
+    }
+
+    override fun checkCalendarTime(title: String) {
+        viewModel.calendarTimeCheck(title)
     }
 }

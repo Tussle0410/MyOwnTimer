@@ -1,5 +1,6 @@
 package com.tussle.myowntimer.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +15,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DetailViewModel(private val repo : Repo) : ViewModel() {
     private val _detailFragment = MutableLiveData(DetailNaviMenu.Timer)
@@ -25,6 +28,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     private val _getTodoEvent = MutableLiveData<Event<Boolean>>()
     private var countUpCheck : Boolean = false
     private var countDownCheck : Boolean = false
+    private val date = GlobalApplication.prefs.timeGetString("date","")
     var title : String
     var todoInfo = MutableLiveData<MutableList<Todo>>()
     val detailFragment : LiveData<DetailNaviMenu>
@@ -45,19 +49,14 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     var countUpPauseTime : Long = 0L
     var countDownPauseTime : Long = 0L
     var countDownTime : Long = 0L
-    var year : String
-    var month : String
-    var day : String
-    var dayOfWeek : String
+    var countUpSaveTime : Long = 0L
+    lateinit var year : String
+    lateinit var month : String
+    lateinit var day : String
+    lateinit var dayOfWeek : String
     init {
         _countUpButtonEvent.value = Event(true)
-        with(GlobalApplication.prefs){
-            title = titleGetString("title","")
-            year = timeGetString("year","")
-            month = timeGetString("month","")
-            day = timeGetString("day","")
-            dayOfWeek = timeGetString("dayOfWeek","") + "요일"
-        }
+        title = GlobalApplication.prefs.titleGetString("title","")
     }
     //Detail Page Bottom Menu Click Listener
     val bottomMenuClickListener =
@@ -108,6 +107,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
         val todo = Todo(title, todo_txt, success)
         CoroutineScope(Dispatchers.IO).launch {
             repo.todoInsert(title, todo_txt, success)
+            repo.calendarTodoInsert(title, date, todo_txt, success)
         }
         addTodo(todo)
     }
@@ -116,10 +116,31 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
         todoInfo.value!!.add(todo)
         _insertTodoEvent.value = Event(true)
     }
+    //Update todo_Success
+    fun todoSuccessUpdate(todo : String, success : Boolean){
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.todoSuccessUpdate(title, todo, success)
+            repo.calendarTodoSuccessUpdate(title, todo, success, date)
+        }
+    }
     //CountUp Start
     fun countUpStart(){
         _countUpEvent.value = countUpCheck
         countUpCheck = countUpCheck.not()
+    }
+    //Time Update
+    fun timeUpdate(check: Boolean) : Boolean{
+        val time = if(check)
+                    countUpPauseTime/1000
+                else
+                    countDownPauseTime/1000
+        if(time>=15){
+            CoroutineScope(Dispatchers.IO).launch {
+                repo.timeUpdate(time, title, date)
+            }
+            return true
+        }
+        return false
     }
     //CountDown Start
     fun countDownStart(){
@@ -133,5 +154,13 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
         countDownTime = 0L
         _countDownEvent.value = countDownCheck
         countDownCheck = countDownCheck.not()
+    }
+    //Set Current Date
+    fun setDate(){
+        val date = Calendar.getInstance().time
+        year = SimpleDateFormat("yyyy", Locale.getDefault()).format(date)
+        month = SimpleDateFormat("MM", Locale.getDefault()).format(date)
+        day = SimpleDateFormat("dd", Locale.getDefault()).format(date)
+        dayOfWeek = SimpleDateFormat("EE", Locale.getDefault()).format(date) + "요일"
     }
 }

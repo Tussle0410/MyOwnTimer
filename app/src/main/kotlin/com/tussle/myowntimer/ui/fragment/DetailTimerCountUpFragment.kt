@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Chronometer
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -31,9 +32,6 @@ class DetailTimerCountUpFragment : Fragment() {
         setButton()
         return binding.root
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
     private fun setButton(){
         viewModel.countUpEvent.observe(requireActivity(), Observer {
             if(!it){
@@ -46,6 +44,8 @@ class DetailTimerCountUpFragment : Fragment() {
                 binding.countUpChronometer.stop()
                 binding.countUpStartButton.text = resources.getString(R.string.txt_start)
                 binding.countUpResetButton.visibility = View.VISIBLE
+                if(!viewModel.timeUpdate(true))
+                    Toast.makeText(requireContext(),"15초 이상 측정해야 목표 정보에 저장됩니다." ,Toast.LENGTH_SHORT).show()
             }
         })
         binding.countUpResetButton.setOnClickListener {

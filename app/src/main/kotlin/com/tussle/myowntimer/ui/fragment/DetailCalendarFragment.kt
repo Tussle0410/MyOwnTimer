@@ -2,6 +2,7 @@ package com.tussle.myowntimer.ui.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.ui.adapter.DetailCalendarRecyclerAdapter
 import com.tussle.myowntimer.ui.adapter.DetailTodoRecyclerAdapter
 import com.tussle.myowntimer.viewmodel.DetailViewModel
+import java.text.SimpleDateFormat
 import java.time.YearMonth
 import java.time.temporal.WeekFields
 import java.util.*
@@ -41,6 +43,10 @@ class DetailCalendarFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = requireActivity()
         toDoSetting()
+        calendarSetting()
+        return binding.root
+    }
+    private fun calendarSetting(){
         var currentMonth = YearMonth.now()
         var firstMonth = currentMonth.minusMonths(10)
         var lastMonth = currentMonth.plusMonths(10)
@@ -74,11 +80,6 @@ class DetailCalendarFragment : Fragment() {
                 container.yearMonth.text = month.yearMonth.toString()
             }
         }
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
     private fun toDoSetting(){
         with(binding.calendarRecycler){
