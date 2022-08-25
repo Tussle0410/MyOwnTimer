@@ -31,6 +31,12 @@ interface DAO {
     @Query("UPDATE CalendarTime SET time = time + :time Where calendar_title = :title AND time_date = :date")
     suspend fun timeUpdate(time : Long, title : String, date: String)
 
+    @Query("UPDATE Title SET todayTime = 0")
+    suspend fun todayTimeInit()
+
+    @Query("UPDATE Title SET todayTime = 0 AND monthTime = 0")
+    suspend fun monthTimeInit()
+
     @Query("SELECT COUNT(title) FROM Title")
     suspend fun getTitleCount() : Int
 

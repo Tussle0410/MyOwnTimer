@@ -124,7 +124,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="25"
+            android:layout_weight="33"
             android:fontFamily="@font/font_main"
             android:gravity="center"
             android:padding="5dp"
@@ -132,21 +132,11 @@
             android:textColor="@color/main_color"
             android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="25"
-            android:fontFamily="@font/font_main"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="@string/txt_weekend"
-            android:textColor="@color/main_color"
-            android:textSize="20sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="25"
+            android:layout_weight="33"
             android:fontFamily="@font/font_main"
             android:gravity="center"
             android:padding="5dp"
@@ -157,7 +147,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="25"
+            android:layout_weight="33"
             android:fontFamily="@font/font_main"
             android:gravity="center"
             android:padding="5dp"
@@ -178,17 +168,7 @@
             android:id="@+id/time_today"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="25"
-            android:fontFamily="@font/font_splash"
-            android:padding="5dp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-        <TextView
-            android:id="@+id/time_weekend"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="25"
+            android:layout_weight="33"
             android:fontFamily="@font/font_splash"
             android:padding="5dp"
             android:gravity="center"
@@ -198,7 +178,7 @@
             android:id="@+id/time_month"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="25"
+            android:layout_weight="33"
             android:fontFamily="@font/font_splash"
             android:padding="5dp"
             android:gravity="center"
@@ -208,7 +188,7 @@
             android:id="@+id/time_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="25"
+            android:layout_weight="33"
             android:fontFamily="@font/font_splash"
             android:padding="5dp"
             android:gravity="center"

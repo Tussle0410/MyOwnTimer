@@ -37,16 +37,23 @@ class MainActivity : AppCompatActivity(), CheckCalendarTime {
         binding.lifecycleOwner = this
         initPage()
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getTitle()
+        listSetting()
+        viewModel.setDate()
+    }
     //Main Page Ads, ViewPager2... init
     private fun initPage(){
         viewModel.getTitle()
-        viewModelSetting()
+        listSetting()
         adsSetting()
         setProfileAndSettingButton()
         setAddButton()
         viewModel.setDate()
     }
-    private fun viewModelSetting(){
+    private fun listSetting(){
         viewModel.titleInfo.observe(this, Observer {
             viewModel.setList()
             pageSetting()

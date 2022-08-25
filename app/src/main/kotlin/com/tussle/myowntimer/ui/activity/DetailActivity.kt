@@ -35,6 +35,10 @@ class DetailActivity : AppCompatActivity() {
             changeFragment(it!!)
         })
     }
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
     //Set Google Ads
     private fun adsSetting(){
         MobileAds.initialize(this){}

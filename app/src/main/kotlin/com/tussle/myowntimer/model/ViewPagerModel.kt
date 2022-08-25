@@ -7,7 +7,6 @@ data class ViewPagerModel(
     val todo : MutableList<String?>,
     val todoSuccess : MutableList<Boolean?>,
     val todayTime : String,
-    val weekendTime : String,
     val monthTime : String,
     val totalTime : String
 )

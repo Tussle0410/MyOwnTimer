@@ -1,6 +1,6 @@
 package com.tussle.myowntimer.viewmodel
 
-import android.widget.Toast
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +13,6 @@ import com.tussle.myowntimer.model.Todo
 import com.tussle.myowntimer.sharedPreference.GlobalApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,6 +27,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     private val _getTodoEvent = MutableLiveData<Event<Boolean>>()
     private var countUpCheck : Boolean = false
     private var countDownCheck : Boolean = false
+    private var countDownEndCheck : Boolean = false
     private val date = GlobalApplication.prefs.timeGetString("date","")
     var title : String
     var todoInfo = MutableLiveData<MutableList<Todo>>()
@@ -50,6 +50,8 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     var countDownPauseTime : Long = 0L
     var countDownTime : Long = 0L
     var countUpSaveTime : Long = 0L
+    var countDownSaveTime : Long = 0L
+    var wholeSaveTime : Long = 0L
     lateinit var year : String
     lateinit var month : String
     lateinit var day : String
@@ -123,6 +125,13 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
             repo.calendarTodoSuccessUpdate(title, todo, success, date)
         }
     }
+    //timeUpdate
+    private fun calendarTimeUpdate(time : Long){
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.timeUpdate(time, title, date)
+        }
+        wholeSaveTime += time
+    }
     //CountUp Start
     fun countUpStart(){
         _countUpEvent.value = countUpCheck
@@ -130,30 +139,46 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     }
     //Time Update
     fun timeUpdate(check: Boolean) : Boolean{
-        val time = if(check)
-                    countUpPauseTime/1000
-                else
-                    countDownPauseTime/1000
-        if(time>=15){
-            CoroutineScope(Dispatchers.IO).launch {
-                repo.timeUpdate(time, title, date)
+        var time = if(check)
+            (countUpSaveTime - countUpPauseTime)/1000
+        else
+            (countDownSaveTime - countDownPauseTime)/1000
+        Log.d("저장 시간", time.toString())
+        Log.d("시간",countDownSaveTime.toString())
+        Log.d("시시간",countDownPauseTime.toString())
+        if(time>=3 && check){
+            countUpSaveTime = countUpPauseTime
+            calendarTimeUpdate(time)
+            return true
+        }else if(!check){
+            countDownSaveTime = countDownPauseTime
+            if(countDownEndCheck){
+                time -= 1L
+                countDownEndCheck = false
             }
+            calendarTimeUpdate(time)
             return true
         }
         return false
     }
+    //Init SaveTime
+    fun saveTimeInit(check : Boolean){
+        if(check)
+            countUpSaveTime = 0L
+        else
+            countDownSaveTime = 0L
+    }
     //CountDown Start
     fun countDownStart(){
-        if(countDownTime!=0L){
-            _countDownEvent.value = countDownCheck
-            countDownCheck = countDownCheck.not()
-        }
+        _countDownEvent.value = countDownCheck
+        countDownCheck = countDownCheck.not()
     }
     //CountDown End
     fun countDownEnd(){
         countDownTime = 0L
-        _countDownEvent.value = countDownCheck
-        countDownCheck = countDownCheck.not()
+        countDownPauseTime = 0L
+        countDownEndCheck = true
+        countDownStart()
     }
     //Set Current Date
     fun setDate(){

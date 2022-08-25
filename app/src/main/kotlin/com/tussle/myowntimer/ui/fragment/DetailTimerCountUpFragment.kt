@@ -2,15 +2,12 @@ package com.tussle.myowntimer.ui.fragment
 
 import android.os.Bundle
 import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Chronometer
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.DetailTimerCountupFrameBinding
@@ -24,45 +21,40 @@ class DetailTimerCountUpFragment : Fragment() {
         ViewModelProvider(requireActivity(),factory).get(DetailViewModel::class.java)
     }
     private lateinit var binding : DetailTimerCountupFrameBinding
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.detail_timer_countup_frame,container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = requireActivity()
-        setChronometer()
         setButton()
         return binding.root
     }
     private fun setButton(){
-        viewModel.countUpEvent.observe(requireActivity(), Observer {
-            if(!it){
-                binding.countUpChronometer.base = SystemClock.elapsedRealtime() + viewModel.countUpPauseTime
+        viewModel.countUpEvent.observe(requireActivity()) {
+            if (!it) {
+                binding.countUpChronometer.base =
+                    SystemClock.elapsedRealtime() + viewModel.countUpPauseTime
                 binding.countUpChronometer.start()
                 binding.countUpStartButton.text = resources.getString(R.string.txt_stop)
                 binding.countUpResetButton.visibility = View.INVISIBLE
-            }else{
-                viewModel.countUpPauseTime = binding.countUpChronometer.base - SystemClock.elapsedRealtime()
+            } else {
                 binding.countUpChronometer.stop()
+                viewModel.countUpPauseTime =
+                    binding.countUpChronometer.base - SystemClock.elapsedRealtime()
                 binding.countUpStartButton.text = resources.getString(R.string.txt_start)
                 binding.countUpResetButton.visibility = View.VISIBLE
-                if(!viewModel.timeUpdate(true))
-                    Toast.makeText(requireContext(),"15초 이상 측정해야 목표 정보에 저장됩니다." ,Toast.LENGTH_SHORT).show()
+                if (!viewModel.timeUpdate(true))
+                    Toast.makeText(
+                        requireContext(),
+                        "시작 버튼을 누른 후 3초 이상 지나야 목표 정보에 저장됩니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
             }
-        })
+        }
         binding.countUpResetButton.setOnClickListener {
             binding.countUpChronometer.base = SystemClock.elapsedRealtime()
             viewModel.countUpPauseTime = 0L
-        }
-    }
-    private fun setChronometer(){
-        binding.countUpChronometer.setOnChronometerTickListener {
-            val time = (SystemClock.elapsedRealtime() - it.base)/1000
-            val h = time/3600
-            val m = (time/60)%60
-            val s = time%60
-            val txtH = if(h<10) "0$h" else h.toString()
-            val txtM = if(m<10) "0$m" else m.toString()
-            val txtS = if(s<10) "0$s" else s.toString()
-            it.format = "$txtH:$txtM:$txtS"
+            viewModel.saveTimeInit(true)
         }
     }
 }

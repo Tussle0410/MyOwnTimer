@@ -40,7 +40,7 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
     //MutableList Title Info Add
     private fun addTitle(title : String){
         viewPagerInfo.value!!.add(ViewPagerModel(title,"0","0", mutableListOf(), mutableListOf(),
-        "0H","0H","0H","0H"))
+        "0H","0H","0H"))
         _insertEvent.value = Event(true)
     }
     //TitleAndTodo Info -> ViewPagerModel info
@@ -59,14 +59,14 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
                 viewPagerInfo.value!!.add(ViewPagerModel(
                     cur.title.title,"0","0",
                     mutableListOf("", "", ""), mutableListOf(false,false,false),
-                    cur.title.todayTime.toString(),cur.title.weekendTime.toString(),
+                    cur.title.todayTime.toString(),
                     cur.title.monthTime.toString(),cur.title.totalTime.toString()))
             }else{
                 if(check){
                     viewPagerInfo.value!!.add(ViewPagerModel(
                         cur.title.title,if(cur.todo.success == true) "1" else "0","1",
                         mutableListOf(cur.todo.todo), mutableListOf(cur.todo.success),
-                        cur.title.todayTime.toString(),cur.title.weekendTime.toString(),
+                        cur.title.todayTime.toString(),
                         cur.title.monthTime.toString(),cur.title.totalTime.toString()))
                 }else{
                     with(viewPagerInfo.value!![index]){
@@ -96,8 +96,8 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
         val format = SimpleDateFormat("yyyy-MM-dd 00:00:00", Locale.getDefault())
         date = format.format(Calendar.getInstance().time)
         val time = format.parse(date)!!.time
-        val previousTime = format.parse(GlobalApplication.prefs.timeGetString("date","1997-04-10 00:00:00"))!!.time
-        val dif = (time - previousTime) / (60*60*24*1000)
+        val previousTime = GlobalApplication.prefs.timeGetString("date","1997-04-10 00:00:00")
+        val dif = (time - format.parse(previousTime)!!.time) / (60*60*24*1000)
         continueDay.value = GlobalApplication.prefs.timeGetInt("continue",0).toString()
         if(dif>=1){
             if(dif==1L){
@@ -106,6 +106,15 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
                 continueDay.value = temp.toString()
             }else
                 GlobalApplication.prefs.timeSetInt("continue",1)
+            if(date.substring(6) == previousTime.substring(6)){
+                CoroutineScope(Dispatchers.IO).launch {
+                    repo.monthTimeInit()
+                }
+            }else{
+                CoroutineScope(Dispatchers.IO).launch {
+                    repo.todayTimeInit()
+                }
+            }
             GlobalApplication.prefs.timeSetString("date", date)
         }
     }

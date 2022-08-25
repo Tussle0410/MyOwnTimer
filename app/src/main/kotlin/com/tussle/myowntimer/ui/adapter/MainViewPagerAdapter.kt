@@ -42,7 +42,6 @@ class MainViewPagerAdapter(val data : MutableList<ViewPagerModel>, context : Con
                 }
             }
             binding.timeToday.text = item.todayTime
-            binding.timeWeekend.text = item.weekendTime
             binding.timeMonth.text = item.monthTime
             binding.timeTotal.text = item.totalTime
             binding.viewPager.setOnClickListener { view ->

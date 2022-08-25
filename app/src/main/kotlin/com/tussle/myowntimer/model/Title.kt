@@ -7,7 +7,6 @@ data class Title(
     @PrimaryKey
     var title : String = "",
     val todayTime : Int = 0,
-    val weekendTime : Int = 0,
     val monthTime : Int = 0,
     val totalTime : Int = 0,
 )

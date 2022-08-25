@@ -42,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{()->viewModel.countDownStart()}"
+            android:enabled="false"
             android:layout_marginBottom="20dp"
             android:backgroundTint="@color/main_color"
             android:fontFamily="@font/font_main"
