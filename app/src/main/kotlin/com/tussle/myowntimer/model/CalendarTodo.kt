@@ -17,7 +17,7 @@ data class CalendarTodo(
     val calendar_title : String,
     val todo_date : String,
     val todo : String,
-    val success : String,
+    val success : Boolean,
     @PrimaryKey(autoGenerate = true)
     val id : Int?
 )

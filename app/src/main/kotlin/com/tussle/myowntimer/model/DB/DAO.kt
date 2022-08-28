@@ -3,13 +3,11 @@ package com.tussle.myowntimer.model.DB
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.tussle.myowntimer.model.CalendarTime
-import com.tussle.myowntimer.model.Title
-import com.tussle.myowntimer.model.TitleAndTodo
-import com.tussle.myowntimer.model.Todo
+import com.tussle.myowntimer.model.*
 
 @Dao
 interface DAO {
+    //Room DB Insert SQL
     @Insert
     suspend fun titleAdd(title: Title)
 
@@ -21,7 +19,7 @@ interface DAO {
 
     @Query("INSERT INTO CalendarTodo(calendar_title, todo_date, todo, success) VALUES(:title, :date, :todo, :success)")
     suspend fun calendarTodoAdd(title : String, date : String, todo : String, success: Boolean)
-
+    //Room DB Update SQL
     @Query("UPDATE Todo SET success = :success WHERE todo = :todo AND todo_title = :title")
     suspend fun todoSuccessUpdate(title : String, todo : String, success: Boolean)
 
@@ -36,7 +34,7 @@ interface DAO {
 
     @Query("UPDATE Title SET todayTime = 0 AND monthTime = 0")
     suspend fun monthTimeInit()
-
+    //Room DB SELECT SQL
     @Query("SELECT COUNT(title) FROM Title")
     suspend fun getTitleCount() : Int
 
@@ -47,6 +45,10 @@ interface DAO {
     suspend fun getTodo(title : String) :MutableList<Todo>
 
     @Query("SELECT * FROM CalendarTime WHERE calendar_title = :title AND time_date = :date")
-    suspend fun getCalendarTime(title: String, date: String) : List<CalendarTime>
+    suspend fun getCalendarTime(title: String, date: String) : MutableList<CalendarTime>
+
+    @Query("SELECT * FROM CalendarTodo WHERE calendar_title = :title AND todo_date = :date")
+    suspend fun getCalendarTodo(title : String, date : String) : MutableList<CalendarTodo>
+    //Room DB DELETE SQL
 }
 

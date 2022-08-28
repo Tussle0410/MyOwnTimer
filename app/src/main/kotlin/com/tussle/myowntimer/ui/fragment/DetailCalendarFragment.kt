@@ -2,7 +2,6 @@ package com.tussle.myowntimer.ui.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,16 +22,12 @@ import com.tussle.myowntimer.databinding.DetailCalendarFrameBinding
 import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.ui.adapter.DetailCalendarRecyclerAdapter
-import com.tussle.myowntimer.ui.adapter.DetailTodoRecyclerAdapter
 import com.tussle.myowntimer.viewmodel.DetailViewModel
-import java.text.SimpleDateFormat
 import java.time.YearMonth
 import java.time.temporal.WeekFields
 import java.util.*
 
 class DetailCalendarFragment : Fragment() {
-    private val test = mutableListOf("할일1", "할일2", "할일3", "할일4","할일5","할일6","할일7","할일8",
-        "할일9", "할일10")
     private val viewModel : DetailViewModel by lazy {
         val factory = RepoFactory(Repo())
         ViewModelProvider(requireActivity(),factory).get(DetailViewModel::class.java)
@@ -46,11 +41,13 @@ class DetailCalendarFragment : Fragment() {
         calendarSetting()
         return binding.root
     }
+    //Calendar Setting
     private fun calendarSetting(){
-        var currentMonth = YearMonth.now()
-        var firstMonth = currentMonth.minusMonths(10)
-        var lastMonth = currentMonth.plusMonths(10)
+        val currentMonth = YearMonth.now()
+        val firstMonth = currentMonth.minusMonths(10)
+        val lastMonth = currentMonth.plusMonths(10)
         val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
+        binding.detailCalendarTime.text = viewModel.getCalendarTimeHash(viewModel.date)
         binding.calendarView.apply {
             setup(firstMonth,lastMonth, firstDayOfWeek)
             scrollToMonth(currentMonth)
@@ -66,10 +63,17 @@ class DetailCalendarFragment : Fragment() {
 
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.textView.text = day.date.dayOfMonth.toString()
-                if (day.owner == DayOwner.THIS_MONTH) {
+                val date = "${day.date} 00:00:00"
+                if(viewModel.calendarTimeEmpty(date))
+                    container.textView.setBackgroundColor(resources.getColor(R.color.gray))
+
+                if (day.owner == DayOwner.THIS_MONTH)
                     container.textView.setTextColor(Color.BLACK)
-                } else {
+                else
                     container.textView.setTextColor(Color.GRAY)
+                container.textView.setOnClickListener {
+                    binding.detailCalendarTime.text = viewModel.getCalendarTimeHash(date)
+                    viewModel.getCalendarTodo(date)
                 }
             }
         }
@@ -82,9 +86,9 @@ class DetailCalendarFragment : Fragment() {
         }
     }
     private fun toDoSetting(){
-        with(binding.calendarRecycler){
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = DetailCalendarRecyclerAdapter(test)
+        binding.calendarRecycler.layoutManager = LinearLayoutManager(requireContext())
+        viewModel.calendarTodoInfo.observe(requireActivity()){
+            binding.calendarRecycler.adapter = DetailCalendarRecyclerAdapter(it, requireContext())
         }
     }
     companion object{

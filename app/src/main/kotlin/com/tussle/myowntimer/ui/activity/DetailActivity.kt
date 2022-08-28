@@ -29,15 +29,27 @@ class DetailActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.detail_page)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        adsSetting()
-        viewModel.setDate()
-        viewModel.detailFragment.observe(this, Observer {
-            changeFragment(it!!)
-        })
+        init()
     }
     override fun onDestroy() {
         super.onDestroy()
 
+    }
+    //Set Observer
+    private fun setObserver(){
+        viewModel.detailFragment.observe(this) {
+            changeFragment(it!!)
+        }
+        viewModel.calendarTimeInfo.observe(this){
+            viewModel.calendarTimeListToHash()
+        }
+    }
+    //Setting Methods
+    private fun init(){
+        setObserver()
+        adsSetting()
+        viewModel.setDate()
+        viewModel.getCalendarTime()
     }
     //Set Google Ads
     private fun adsSetting(){

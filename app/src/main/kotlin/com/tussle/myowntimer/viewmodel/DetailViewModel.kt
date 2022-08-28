@@ -1,12 +1,13 @@
 package com.tussle.myowntimer.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.navigation.NavigationBarView
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.event.Event
+import com.tussle.myowntimer.model.CalendarTime
+import com.tussle.myowntimer.model.CalendarTodo
 import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DetailNaviMenu
 import com.tussle.myowntimer.model.Todo
@@ -16,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 class DetailViewModel(private val repo : Repo) : ViewModel() {
     private val _detailFragment = MutableLiveData(DetailNaviMenu.Timer)
@@ -28,9 +30,12 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     private var countUpCheck : Boolean = false
     private var countDownCheck : Boolean = false
     private var countDownEndCheck : Boolean = false
-    private val date = GlobalApplication.prefs.timeGetString("date","")
+    val date = GlobalApplication.prefs.timeGetString("date","")
     var title : String
     var todoInfo = MutableLiveData<MutableList<Todo>>()
+    var calendarTimeInfo = MutableLiveData<MutableList<CalendarTime>>()
+    var calendarTodoInfo = MutableLiveData<MutableList<CalendarTodo>>()
+    var calendarTimeHash = MutableLiveData<HashMap<String,Int>>()
     val detailFragment : LiveData<DetailNaviMenu>
         get() = _detailFragment
     val countUpButtonEvent : LiveData<Event<Boolean>>
@@ -49,9 +54,9 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     var countUpPauseTime : Long = 0L
     var countDownPauseTime : Long = 0L
     var countDownTime : Long = 0L
-    var countUpSaveTime : Long = 0L
-    var countDownSaveTime : Long = 0L
-    var wholeSaveTime : Long = 0L
+    private var countUpSaveTime : Long = 0L
+    private var countDownSaveTime : Long = 0L
+    private var wholeSaveTime : Long = 0L
     lateinit var year : String
     lateinit var month : String
     lateinit var day : String
@@ -130,6 +135,10 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             repo.timeUpdate(time, title, date)
         }
+        with(calendarTimeHash.value!!){
+            val tempTime = get(date)?.plus(time)
+            put(date, tempTime!!.toInt())
+        }
         wholeSaveTime += time
     }
     //CountUp Start
@@ -143,9 +152,6 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
             (countUpSaveTime - countUpPauseTime)/1000
         else
             (countDownSaveTime - countDownPauseTime)/1000
-        Log.d("저장 시간", time.toString())
-        Log.d("시간",countDownSaveTime.toString())
-        Log.d("시시간",countDownPauseTime.toString())
         if(time>=3 && check){
             countUpSaveTime = countUpPauseTime
             calendarTimeUpdate(time)
@@ -187,5 +193,47 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
         month = SimpleDateFormat("MM", Locale.getDefault()).format(date)
         day = SimpleDateFormat("dd", Locale.getDefault()).format(date)
         dayOfWeek = SimpleDateFormat("EE", Locale.getDefault()).format(date) + "요일"
+    }
+    //Get CalendarTime Date
+    fun getCalendarTime(){
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.getCalendarTime(title, date).let {
+                    calendarTimeInfo.postValue(it)
+            }
+        }
+    }
+    //Get CalendarTodo Date
+    fun getCalendarTodo(date : String){
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.getCalendarTodo(title, date).let {
+                calendarTodoInfo.postValue(it)
+            }
+        }
+    }
+    //CalendarTime List -> HashMap
+    fun calendarTimeListToHash(){
+        calendarTimeHash.value = HashMap()
+        for ( cur in calendarTimeInfo.value!!){
+            calendarTimeHash.value!![cur.time_date] = cur.time
+        }
+    }
+    //CalendarTime HashMap Empty Check
+    fun calendarTimeEmpty(date : String) : Boolean{
+        val tempTime = calendarTimeHash.value!!.getOrDefault(date,0)
+        return tempTime>0
+    }
+    //Get CalendarTimeHash Info
+    fun getCalendarTimeHash(date : String) : String
+        = timeConvert((calendarTimeHash.value?.getOrDefault(date,0))!!.toLong())
+
+    //Convert MillSec -> HH:MM:SS
+    fun timeConvert(sec : Long) : String{
+        val h = (sec/3600)
+        val m = ((sec/60)%60)
+        val s = (sec%60)
+        val txtH = if(h<10) "0$h" else h.toString()
+        val txtM = if(m<10) "0$m" else m.toString()
+        val txtS = if(s<10) "0$s" else s.toString()
+        return "$txtH:$txtM:$txtS"
     }
 }

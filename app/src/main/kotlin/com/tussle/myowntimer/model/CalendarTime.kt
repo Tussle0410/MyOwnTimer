@@ -19,7 +19,7 @@ data class CalendarTime(
     val calendar_title : String,
     val time_date : String,
     @ColumnInfo(name = "time", defaultValue = "0")
-    val time : Int? = 0,
+    val time : Int = 0,
     @PrimaryKey(autoGenerate = true)
     val id : Int?
 )
