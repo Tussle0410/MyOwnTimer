@@ -36,14 +36,18 @@ class DetailChartFragment : Fragment() {
         setChart()
         return binding.root
     }
+    private fun initEntries(){
+        with(entries){
+            for(n in 2..32){
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+            }
+        }
     }
     private fun setEntries(){
         val range = (30..300)
+        entries.clear()
         with(entries){
-            for( n in 2..31)
+            for( n in 2..32)
                 add(BarEntry(n.toFloat(),range.random().toFloat()))
         }
     }
@@ -55,9 +59,9 @@ class DetailChartFragment : Fragment() {
             setDrawBarShadow(false)     //그래프 바 그림자 제거
             setDrawGridBackground(false)        //배경에 격자판 제거
             axisLeft.run {      //y축 설정
-                axisMaximum = 601f      //높이 최대
+                axisMaximum = 301f      //높이 최대
                 axisMinimum = 0f        //높이 최소
-                granularity = 60f       //50단위마다 선을 그려준다.
+                granularity = 60f       //60단위마다 선을 그려준다.
                 setLabelCount(4 ,true)
                 setDrawGridLines(false)  //격자 라인 활용
                 valueFormatter = MyYAxisFormatter()
@@ -70,10 +74,11 @@ class DetailChartFragment : Fragment() {
                 setDrawLabels(false)
                 setDrawGridLines(false)
             }
-            xAxis.run {
-                axisMaximum = 32f
+            xAxis.run {     //축 설정
+                axisMaximum = 32.3f
                 axisMinimum = 1.7f
-                setLabelCount(6, true)
+                setLabelCount(7, true)
+                legend.isEnabled = false    //라벨 지우기
                 position = XAxis.XAxisPosition.BOTTOM//X축을 아래에다가 둔다.
                 granularity = 1f // 1 단위만큼 간격 두기
                 setDrawAxisLine(true) // 축 그림
@@ -81,9 +86,10 @@ class DetailChartFragment : Fragment() {
                 textColor = R.color.black//라벨 색상
                 valueFormatter = MyXAxisFormatter() // 축 라벨 값 바꿔주기 위함
                 textSize = 14f // 텍스트 크기
+
             }
         }
-        val set = BarDataSet(entries, "DataSet")
+        val set = BarDataSet(entries, "")
         set.color = Color.RED
         val dataSet : ArrayList<IBarDataSet> = ArrayList()
         dataSet.add(set)
@@ -106,7 +112,6 @@ class DetailChartFragment : Fragment() {
     inner class MyYAxisFormatter : ValueFormatter(){
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             return (value/60).toInt().toString() + "시간"
-            //return days.getOrNull(value.toInt()-1) ?: ""
         }
     }
     companion object{

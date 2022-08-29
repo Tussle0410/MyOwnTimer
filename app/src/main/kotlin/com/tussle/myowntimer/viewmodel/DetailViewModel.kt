@@ -31,6 +31,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     private var countDownCheck : Boolean = false
     private var countDownEndCheck : Boolean = false
     val date = GlobalApplication.prefs.timeGetString("date","")
+    var chartDate = MutableLiveData<String>()
     var title : String
     var todoInfo = MutableLiveData<MutableList<Todo>>()
     var calendarTimeInfo = MutableLiveData<MutableList<CalendarTime>>()
@@ -193,6 +194,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
         month = SimpleDateFormat("MM", Locale.getDefault()).format(date)
         day = SimpleDateFormat("dd", Locale.getDefault()).format(date)
         dayOfWeek = SimpleDateFormat("EE", Locale.getDefault()).format(date) + "요일"
+        chartDate.value = "$year-$month"
     }
     //Get CalendarTime Date
     fun getCalendarTime(){

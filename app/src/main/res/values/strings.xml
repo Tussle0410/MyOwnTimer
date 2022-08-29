@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name_eng">MyOwnTimer</string>
     <string name="app_name_kor">나만의 타이머</string>
+    <string name="txt_backDescription">뒤로가기</string>
     //Main Page Text
     <string name="txt_main_01">당신은 연속</string>
     <string name="txt_main_02">일간</string>
@@ -13,7 +14,7 @@
     <string name="txt_weekend">주</string>
     <string name="txt_month">달</string>\
     <string name="txt_total">통합</string>
-    <string name="txt_comma">...</string>
+    <string name="txt_commas">…</string>
     //BottomNavi Menu Text
     <string name="txt_timer">타이머</string>
     <string name="txt_todo">할 일</string>
@@ -40,8 +41,21 @@
     <string name="txt_friDay">FRI</string>
     <string name="txt_satDay">SAT</string>
     <string name="txt_time">시 간</string>
+    //ChartFragment Text
+    <string name="txt_totalTime">총시간</string>
     //SettingPage Text
     <string name="txt_setting">설 정</string>
+    <string name="txt_comma">.</string>
+    <string name="txt_monthAvgTime">월간 평균 시간</string>
+    <string name="txt_monthMaxTime">월간 최대 시간</string>
+    <string name="txt_nextMonth">다음 달</string>
+    <string name="txt_previousMonth">이전 달</string>
     //ProfilePage Text
     <string name="txt_profile">내 정보</string>
+    <string name="txt_goal">목표</string>
+    <string name="txt_usingTime">사용 시간</string>
+    <string name="txt_goalAvgTime">목표 평균 시간</string>
+    <string name="txt_goalMaxTime">목표 최대 시간</string>
+    <string name="txt_piece">개</string>
+    
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
@@ -25,7 +25,8 @@
                 android:backgroundTint="@color/backgroundTransparency"
                 android:src="@drawable/icon_back"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/txt_previousMonth"/>
 
             <ImageButton
                 android:id="@+id/imageButton4"
@@ -35,46 +36,22 @@
                 android:src="@drawable/icon_next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/txt_nextMonth"/>
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_splash"
+                android:fontFamily="@font/font_main"
                 android:textColor="@color/black"
-                android:text="2022"
+                android:text="@{viewModel.chartDate}"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.42"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:fontFamily="@font/font_main"
-                android:textColor="@color/black"
-                android:text="."
-                android:textSize="30sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView7"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:fontFamily="@font/font_splash"
-                android:textColor="@color/black"
-                android:text="08"
-                android:textSize="30sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView10"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -94,7 +71,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/font_main"
-            android:text="총 시간"
+            android:text="@string/txt_totalTime"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/textView15"
             app:layout_constraintStart_toStartOf="parent" />
@@ -103,9 +80,8 @@
             android:id="@+id/textView15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/font_splash"
+            android:fontFamily="@font/font_main"
             android:gravity="center"
-            android:text="22:22:22"
             android:textColor="@color/black"
             android:textSize="25sp"
             app:layout_constraintBottom_toTopOf="@+id/view"
@@ -127,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_main"
-            android:text="월간 평균 시간"
+            android:text="@string/txt_monthAvgTime"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/view"
             app:layout_constraintStart_toStartOf="parent"
@@ -138,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_main"
-            android:text="월간 최대 시간"
+            android:text="@string/txt_monthMaxTime"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view"
@@ -149,9 +125,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/font_splash"
+            android:fontFamily="@font/font_main"
             android:textColor="@color/black"
-            android:text="03 : 02 : 03"
             android:textSize="23sp"
             app:layout_constraintEnd_toStartOf="@+id/view"
             app:layout_constraintStart_toStartOf="parent"
@@ -161,9 +136,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/font_splash"
+            android:fontFamily="@font/font_main"
             android:textColor="@color/black"
-            android:text="06 : 12 : 23"
             android:textSize="23sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view"

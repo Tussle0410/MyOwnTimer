@@ -104,7 +104,7 @@
         android:layout_marginTop="5dp"
         android:padding="5dp"
         android:layout_marginStart="15dp"
-        android:text="@string/txt_comma"
+        android:text="@string/txt_commas"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
