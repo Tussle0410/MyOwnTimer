@@ -1,5 +1,6 @@
 package com.tussle.myowntimer.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -58,6 +59,10 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     private var countUpSaveTime : Long = 0L
     private var countDownSaveTime : Long = 0L
     private var wholeSaveTime : Long = 0L
+    var chartMaxTime : Long = 0L
+    var chartSumTime : Long = 0L
+    var chartAvgTime : Long = 0L
+    var chartTimeCount : Int = 0
     lateinit var year : String
     lateinit var month : String
     lateinit var day : String
@@ -199,7 +204,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     //Get CalendarTime Date
     fun getCalendarTime(){
         CoroutineScope(Dispatchers.IO).launch {
-            repo.getCalendarTime(title, date).let {
+            repo.getAllCalendarTime(title).let {
                     calendarTimeInfo.postValue(it)
             }
         }
@@ -224,10 +229,55 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
         val tempTime = calendarTimeHash.value!!.getOrDefault(date,0)
         return tempTime>0
     }
-    //Get CalendarTimeHash Info
-    fun getCalendarTimeHash(date : String) : String
+    //Get CalendarTimeHash Info -> TimeConvert
+    fun getCalendarTimeHashConvert(date : String) : String
         = timeConvert((calendarTimeHash.value?.getOrDefault(date,0))!!.toLong())
 
+    //Get CalendarTimeHash Info -> Time
+    fun getCalendarTimeHashTime(date : String) : Int?{
+        return if(calendarTimeHash.value!!.containsKey(date)){
+            chartTimeCount++
+            calendarTimeHash.value!![date]
+        }else
+            0
+    }
+
+    //Compare ChartTimeMax
+    fun compareChartTimeMax(time: Int){
+        if(time > chartMaxTime)
+            chartMaxTime = time.toLong()
+    }
+    //Sum ChartTime
+    fun sumChartTime(time:Int){
+        chartSumTime+=time.toLong()
+    }
+    //Avg ChartTime
+    fun avgCharTime(){
+        if(chartTimeCount!=0)
+            chartAvgTime =chartSumTime/chartTimeCount
+    }
+    //Init ChartTime
+    fun initChartTime(){
+        chartSumTime=0L
+        chartAvgTime=0L
+        chartMaxTime=0L
+        chartTimeCount=0
+    }
+    //Reduce Month of ChartDate
+    fun monthPreviousChange(){
+        var tYear = chartDate.value!!.substring(0,4).toInt()
+        var tMonth = chartDate.value!!.substring(5).toInt()
+        if(tMonth== 1){
+            tYear--
+            chartDate.value = "$tYear-12"
+        }else{
+            tMonth--
+            if(tMonth>9)
+                chartDate.value = "$tYear-$tMonth"
+            else
+                chartDate.value = "$tYear-0$tMonth"
+        }
+    }
     //Convert MillSec -> HH:MM:SS
     fun timeConvert(sec : Long) : String{
         val h = (sec/3600)

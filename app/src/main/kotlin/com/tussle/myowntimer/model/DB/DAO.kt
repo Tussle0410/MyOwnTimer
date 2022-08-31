@@ -47,6 +47,9 @@ interface DAO {
     @Query("SELECT * FROM CalendarTime WHERE calendar_title = :title AND time_date = :date")
     suspend fun getCalendarTime(title: String, date: String) : MutableList<CalendarTime>
 
+    @Query("SELECT * FROM CalendarTime WHERE calendar_title = :title")
+    suspend fun getAllCalendarTime(title:String) : MutableList<CalendarTime>
+
     @Query("SELECT * FROM CalendarTodo WHERE calendar_title = :title AND todo_date = :date")
     suspend fun getCalendarTodo(title : String, date : String) : MutableList<CalendarTodo>
     //Room DB DELETE SQL

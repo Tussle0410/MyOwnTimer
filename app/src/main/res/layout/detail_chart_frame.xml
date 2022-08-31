@@ -10,42 +10,44 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/chart_previousMonthButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/backgroundTransparency"
+                android:contentDescription="@string/txt_previousMonth"
                 android:src="@drawable/icon_back"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/txt_previousMonth"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/imageButton4"
+                android:id="@+id/chart_nextMonthButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/backgroundTransparency"
+                android:contentDescription="@string/txt_nextMonth"
                 android:src="@drawable/icon_next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/txt_nextMonth"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_main"
-                android:textColor="@color/black"
                 android:text="@{viewModel.chartDate}"
+                android:textColor="@color/black"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -73,11 +75,11 @@
             android:fontFamily="@font/font_main"
             android:text="@string/txt_totalTime"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView15"
+            app:layout_constraintBottom_toTopOf="@+id/chart_totalTime"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/chart_totalTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_main"
@@ -121,7 +123,7 @@
             app:layout_constraintTop_toTopOf="@+id/view" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/chart_avgTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -133,6 +135,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
         <TextView
+            android:id="@+id/chart_maxTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

@@ -47,7 +47,7 @@ class DetailCalendarFragment : Fragment() {
         val firstMonth = currentMonth.minusMonths(10)
         val lastMonth = currentMonth.plusMonths(10)
         val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
-        binding.detailCalendarTime.text = viewModel.getCalendarTimeHash(viewModel.date)
+        binding.detailCalendarTime.text = viewModel.getCalendarTimeHashConvert(viewModel.date)
         binding.calendarView.apply {
             setup(firstMonth,lastMonth, firstDayOfWeek)
             scrollToMonth(currentMonth)
@@ -72,7 +72,7 @@ class DetailCalendarFragment : Fragment() {
                 else
                     container.textView.setTextColor(Color.GRAY)
                 container.textView.setOnClickListener {
-                    binding.detailCalendarTime.text = viewModel.getCalendarTimeHash(date)
+                    binding.detailCalendarTime.text = viewModel.getCalendarTimeHashConvert(date)
                     viewModel.getCalendarTodo(date)
                 }
             }
