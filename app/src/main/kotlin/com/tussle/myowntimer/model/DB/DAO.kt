@@ -34,6 +34,10 @@ interface DAO {
 
     @Query("UPDATE Title SET todayTime = 0 AND monthTime = 0")
     suspend fun monthTimeInit()
+
+    @Query("UPDATE Title SET todayTime = todayTime + :time, monthTime = monthTime + :time, totalTime = totalTime + :time WHERE title = :title")
+    suspend fun titleTimeUpdate(time : Long, title : String)
+
     //Room DB SELECT SQL
     @Query("SELECT COUNT(title) FROM Title")
     suspend fun getTitleCount() : Int

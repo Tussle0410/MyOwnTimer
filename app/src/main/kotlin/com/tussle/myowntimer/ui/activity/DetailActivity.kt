@@ -32,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
     }
     override fun onDestroy() {
         super.onDestroy()
-
+        viewModel.titleTimeUpdate()
     }
     //Set Observer
     private fun setObserver(){

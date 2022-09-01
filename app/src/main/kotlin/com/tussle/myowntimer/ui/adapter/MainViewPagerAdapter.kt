@@ -41,9 +41,9 @@ class MainViewPagerAdapter(val data : MutableList<ViewPagerModel>, context : Con
                     if (item.todoSuccess[2] == true) setTodo3TextColor()
                 }
             }
-            binding.timeToday.text = item.todayTime
-            binding.timeMonth.text = item.monthTime
-            binding.timeTotal.text = item.totalTime
+            binding.timeToday.text = timeConverter(item.todayTime)
+            binding.timeMonth.text = timeConverter(item.monthTime)
+            binding.timeTotal.text = timeConverter(item.totalTime)
             binding.viewPager.setOnClickListener { view ->
                 GlobalApplication.prefs.titleSetString("title", item.title)
                 mCallback.checkCalendarTime(item.title)
@@ -59,6 +59,15 @@ class MainViewPagerAdapter(val data : MutableList<ViewPagerModel>, context : Con
         }
         private fun setTodo3TextColor(){
                 binding.mainViewpagerTodo3.setTextColor(successColor)
+        }
+        private fun timeConverter(time : Int) : String{
+            val h = time/3600
+            val m = (time/60)%60
+            val s = time%60
+            val txtH = if(h<10) "0$h" else h.toString()
+            val txtM = if(m<10) "0$m" else m.toString()
+            val txtS = if(s<10) "0$s" else s.toString()
+            return "$txtH:$txtM:$txtS"
         }
 
     }

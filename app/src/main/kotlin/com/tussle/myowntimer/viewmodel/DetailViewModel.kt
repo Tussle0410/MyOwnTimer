@@ -1,6 +1,5 @@
 package com.tussle.myowntimer.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -146,6 +145,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
             put(date, tempTime!!.toInt())
         }
         wholeSaveTime += time
+        titleTimeUpdate()
     }
     //CountUp Start
     fun countUpStart(){
@@ -278,11 +278,36 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
                 chartDate.value = "$tYear-0$tMonth"
         }
     }
+    //Next Month of ChartDate
+    fun monthNextChange(){
+        var tYear = chartDate.value!!.substring(0,4).toInt()
+        var tMonth = chartDate.value!!.substring(5).toInt()
+        if(tMonth==12){
+            tYear++
+            chartDate.value = "$tYear-01"
+        }else{
+            tMonth++
+            if(tMonth>9)
+                chartDate.value = "$tYear-$tMonth"
+            else
+                chartDate.value = "$tYear-0$tMonth"
+        }
+    }
+    //Current Month of ChartDate equals TodayDate
+    fun chartMonthCheck() : Boolean{
+        return chartDate.value != date.substring(0,7)
+    }
+    //TitleTimeUpdate
+    fun titleTimeUpdate(){
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.titleTimeUpdate(wholeSaveTime, title)
+        }
+    }
     //Convert MillSec -> HH:MM:SS
     fun timeConvert(sec : Long) : String{
-        val h = (sec/3600)
-        val m = ((sec/60)%60)
-        val s = (sec%60)
+        val h = sec/3600
+        val m = (sec/60)%60
+        val s = sec%60
         val txtH = if(h<10) "0$h" else h.toString()
         val txtM = if(m<10) "0$m" else m.toString()
         val txtS = if(s<10) "0$s" else s.toString()

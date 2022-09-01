@@ -40,7 +40,7 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
     //MutableList Title Info Add
     private fun addTitle(title : String){
         viewPagerInfo.value!!.add(ViewPagerModel(title,"0","0", mutableListOf(), mutableListOf(),
-        "0H","0H","0H"))
+        0,0,0))
         _insertEvent.value = Event(true)
     }
     //TitleAndTodo Info -> ViewPagerModel info
@@ -59,15 +59,13 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
                 viewPagerInfo.value!!.add(ViewPagerModel(
                     cur.title.title,"0","0",
                     mutableListOf("", "", ""), mutableListOf(false,false,false),
-                    cur.title.todayTime.toString(),
-                    cur.title.monthTime.toString(),cur.title.totalTime.toString()))
+                    cur.title.todayTime, cur.title.monthTime,cur.title.totalTime))
             }else{
                 if(check){
                     viewPagerInfo.value!!.add(ViewPagerModel(
                         cur.title.title,if(cur.todo.success == true) "1" else "0","1",
                         mutableListOf(cur.todo.todo), mutableListOf(cur.todo.success),
-                        cur.title.todayTime.toString(),
-                        cur.title.monthTime.toString(),cur.title.totalTime.toString()))
+                        cur.title.todayTime, cur.title.monthTime,cur.title.totalTime))
                 }else{
                     with(viewPagerInfo.value!![index]){
                         todo.add(cur.todo.todo)
@@ -106,7 +104,8 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
                 continueDay.value = temp.toString()
             }else
                 GlobalApplication.prefs.timeSetInt("continue",1)
-            if(date.substring(6) == previousTime.substring(6)){
+
+            if(date.substring(5, 7) != previousTime.substring(5, 7)){
                 CoroutineScope(Dispatchers.IO).launch {
                     repo.monthTimeInit()
                 }

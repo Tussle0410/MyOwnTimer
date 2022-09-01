@@ -60,7 +60,6 @@ class DetailChartFragment : Fragment() {
                     time.toFloat()))
             }
         }
-        Log.d("시간", "${viewModel.chartMaxTime} ${viewModel.chartSumTime} ${viewModel.chartTimeCount}")
         viewModel.avgCharTime()
         settingText()
     }
@@ -72,7 +71,11 @@ class DetailChartFragment : Fragment() {
             setChartDate()
         }
         binding.chartNextMonthButton.setOnClickListener {
-
+            if(viewModel.chartMonthCheck()){
+                viewModel.monthNextChange()
+                setEntries()
+                setChartDate()
+            }
         }
     }
     //Chart Fragment Txt Setting

@@ -35,6 +35,9 @@ class Repo{
     suspend fun monthTimeInit(){
         dbInstance.monthTimeInit()
     }
+    suspend fun titleTimeUpdate(time:Long, title:String){
+        dbInstance.titleTimeUpdate(time, title)
+    }
     suspend fun getInfo() = dbInstance.getInfo()
     suspend fun getTitleCount() = dbInstance.getTitleCount()
     suspend fun getTodo(title:String)=dbInstance.getTodo(title)

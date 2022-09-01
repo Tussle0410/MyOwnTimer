@@ -6,7 +6,7 @@ data class ViewPagerModel(
     var allTodo : String,
     val todo : MutableList<String?>,
     val todoSuccess : MutableList<Boolean?>,
-    val todayTime : String,
-    val monthTime : String,
-    val totalTime : String
+    val todayTime : Int,
+    val monthTime : Int,
+    val totalTime : Int
 )
