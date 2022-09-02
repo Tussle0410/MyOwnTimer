@@ -1,6 +1,5 @@
 package com.tussle.myowntimer.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +20,7 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
     val viewPagerInfo = MutableLiveData<MutableList<ViewPagerModel>>()
     val titleInfo = MutableLiveData<List<TitleAndTodo>>()
     val continueDay = MutableLiveData<String>()
+    var titleCount = GlobalApplication.prefs.titleGetInt("titleCount",0)
     private lateinit var date : String
     //DB Title Info Insert And MutableList Add
     fun insertTitle(title : String){
@@ -42,6 +42,8 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
         viewPagerInfo.value!!.add(ViewPagerModel(title,"0","0", mutableListOf(), mutableListOf(),
         0,0,0))
         _insertEvent.value = Event(true)
+        titleCount++
+        GlobalApplication.prefs.titleSetInt("titleCount",titleCount)
     }
     //TitleAndTodo Info -> ViewPagerModel info
     fun setList(){

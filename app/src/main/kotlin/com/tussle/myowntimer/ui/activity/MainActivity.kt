@@ -54,10 +54,10 @@ class MainActivity : AppCompatActivity(), CheckCalendarTime {
         viewModel.setDate()
     }
     private fun listSetting(){
-        viewModel.titleInfo.observe(this, Observer {
+        viewModel.titleInfo.observe(this) {
             viewModel.setList()
             pageSetting()
-        })
+        }
         viewModel.insertEvent.observe(this,EventObserver{
             viewPagerAdapter.notifyDataSetChanged()
         })
@@ -69,14 +69,12 @@ class MainActivity : AppCompatActivity(), CheckCalendarTime {
             AlertDialog.Builder(this)
                 .setTitle("목표 추가하기!")
                 .setView(bindingDialog.root)
-                .setPositiveButton("추가",DialogInterface.OnClickListener { _, _ ->
-                    val titleCount = GlobalApplication.prefs.titleGetInt("titleCount",0)
-                    if(titleCount < 10){
-                        GlobalApplication.prefs.titleSetInt("titleCount",titleCount+1)
+                .setPositiveButton("추가") { _, _ ->
+                    if (viewModel.titleCount < 10)
                         viewModel.insertTitle(bindingDialog.mainDialogTitle.text.toString())
-                    }else
+                    else
                         toast("목표를 10개 이상 초과할 수 없습니다.")
-                })
+                }
                 .show()
         }
     }
