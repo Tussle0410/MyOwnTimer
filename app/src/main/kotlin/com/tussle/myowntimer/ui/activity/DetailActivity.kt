@@ -30,10 +30,6 @@ class DetailActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         init()
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.titleTimeUpdate()
-    }
     //Set Observer
     private fun setObserver(){
         viewModel.detailFragment.observe(this) {
