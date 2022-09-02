@@ -11,58 +11,80 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.ProfilePageBinding
+import com.tussle.myowntimer.model.DB.Repo
+import com.tussle.myowntimer.model.DB.RepoFactory
+import com.tussle.myowntimer.ui.formatter.PieChartFormatter
 import com.tussle.myowntimer.viewmodel.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
     private val viewModel : ProfileViewModel by lazy {
-        ViewModelProvider(this).get(ProfileViewModel::class.java)
+        val factory = RepoFactory(Repo())
+        ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
     }
-    private val test = ArrayList<PieEntry>()
+    private val entries = ArrayList<PieEntry>()
+    private var pieChartColors : MutableList<Int> = mutableListOf()
     private lateinit var binding : ProfilePageBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.profile_page)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        setPieChart()
+        init()
     }
-    private fun setTestEntry(){
-        with(test){
-            val range = (100..600)
-            for( i in 1..4)
-                test.add(PieEntry(range.random().toFloat(), "주제$i"))
+    //Init ProfileFragment Setting
+    private fun init(){
+        setBackButton()
+        viewModel.getTitleInfo()
+        viewModel.titleInfo.observe(this){
+            viewModel.setProfileInfo()
+            setEntries()
+            setPieChart()
         }
     }
+    private fun setEntries(){
+        for(info in viewModel.titleInfo.value!!)
+            entries.add(PieEntry(info.totalTime.toFloat(), info.title))
+    }
+    //ProfileFragment BackButton Setting Method
+    private fun setBackButton(){
+        binding.profileBackButton.setOnClickListener {
+            finish()
+        }
+    }
+    //PieChart Setting
     private fun setPieChart(){
-        setTestEntry()
-        val color = listOf(Color.RED,Color.GREEN,Color.BLUE,Color.YELLOW)
-        val pieDataSet = PieDataSet(test,"").apply {
-            colors = color
-            valueLinePart1Length = 0.6f
-            valueLinePart2Length = 0.3f
-            valueLineWidth = 2f
+        setPieChartColor()
+        val pieDataSet = PieDataSet(entries,"").apply {
+            colors = pieChartColors     //PieChart Colors
+            valueLinePart1Length = 0.6f        //ValueLine1(-)
+            valueLinePart2Length = 0.3f         //ValueLine2(/)
+            valueLineWidth = 2f     //ValueLine Width
             valueLinePart1OffsetPercentage = 115f
-            isUsingSliceColorAsValueLineColor = true
-            yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
-            valueTextSize = 16f
-            valueTypeface = Typeface.DEFAULT_BOLD
+            isUsingSliceColorAsValueLineColor = true    //PieChartColor == ValueLineColor
+            yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE     //ValueLine Position OutSide
+            valueTextSize = 16f     //valueTextSize
+            valueTypeface = Typeface.DEFAULT_BOLD       //valueText Bold
+            valueFormatter = PieChartFormatter()
         }
         val pieData = PieData(pieDataSet).apply {
             setValueTextSize(20f)
             setValueTextColor(Color.BLACK)
         }
         with(binding.profilePieChart){
-            setUsePercentValues(true)
-            description.isEnabled = false
+            setUsePercentValues(false)
+            description.isEnabled = false       //description InVisible
             setExtraOffsets(25f, 25f, 25f, 25f)
             dragDecelerationFrictionCoef = 0.95f
             transparentCircleRadius = 61f
             setEntryLabelTextSize(20f)
             setDrawEntryLabels(false)
-            setHoleColor(Color.WHITE)
+            setHoleColor(Color.WHITE)       //PieChart Center Hole Color
             data = pieData
             invalidate()
-
         }
+    }
+    //Set ColorList
+    private fun setPieChartColor(){
+        pieChartColors = resources.getIntArray(R.array.pieChartColor).toMutableList()
     }
 }

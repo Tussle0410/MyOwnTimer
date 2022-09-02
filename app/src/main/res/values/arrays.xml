@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pieChartColor">
+        <item>@color/pieChartColor_1</item>
+        <item>@color/pieChartColor_2</item>
+        <item>@color/pieChartColor_3</item>
+        <item>@color/pieChartColor_4</item>
+        <item>@color/pieChartColor_5</item>
+        <item>@color/pieChartColor_6</item>
+        <item>@color/pieChartColor_7</item>
+        <item>@color/pieChartColor_8</item>
+        <item>@color/pieChartColor_9</item>
+        <item>@color/pieChartColor_10</item>
+    </array>
+</resources>

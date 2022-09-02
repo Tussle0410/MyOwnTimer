@@ -18,5 +18,16 @@
     //Todo Color
     <color name="add_background">#3AB0FF</color>
     <color name="add_icon">#F9F2ED</color>
+    //Profile PieChartColor
+    <color name="pieChartColor_1">#FF8A80</color>
+    <color name="pieChartColor_2">#EA80FC</color>
+    <color name="pieChartColor_3">#B388FF</color>
+    <color name="pieChartColor_4">#8C9EFF</color>
+    <color name="pieChartColor_5">#82B1FF</color>
+    <color name="pieChartColor_6">#A7FFEB</color>
+    <color name="pieChartColor_7">#CCFF90</color>
+    <color name="pieChartColor_8">#FFFF8D</color>
+    <color name="pieChartColor_9">#FFD180</color>
+    <color name="pieChartColor_10">#F4FF81</color>
 
 </resources>

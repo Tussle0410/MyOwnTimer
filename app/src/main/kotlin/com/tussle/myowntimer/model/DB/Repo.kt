@@ -40,6 +40,7 @@ class Repo{
     }
     suspend fun getInfo() = dbInstance.getInfo()
     suspend fun getTitleCount() = dbInstance.getTitleCount()
+    suspend fun getTitle() = dbInstance.getTitle()
     suspend fun getTodo(title:String)=dbInstance.getTodo(title)
     suspend fun getCalendarTime(title : String, date:String)=dbInstance.getCalendarTime(title, date)
     suspend fun getCalendarTodo(title : String, date : String) = dbInstance.getCalendarTodo(title, date)

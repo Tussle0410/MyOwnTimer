@@ -45,6 +45,9 @@ interface DAO {
     @Query("SELECT * FROM Title LEFT OUTER JOIN Todo ON Title.title == Todo.todo_title")
     suspend fun getInfo() : List<TitleAndTodo>?
 
+    @Query("SELECT * FROM Title")
+    suspend fun getTitle() : List<Title>
+
     @Query("SELECT * FROM Todo WHERE todo_title == :title")
     suspend fun getTodo(title : String) :MutableList<Todo>
 
