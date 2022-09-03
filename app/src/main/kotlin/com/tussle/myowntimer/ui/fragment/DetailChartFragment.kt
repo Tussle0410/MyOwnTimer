@@ -36,6 +36,21 @@ class DetailChartFragment : Fragment() {
         init()
         return binding.root
     }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden){
+            val time = viewModel.getCalendarTimeHashTime(viewModel.date)!!
+            viewModel.sumChartTime(time)
+            entries[viewModel.day.toInt()] =
+                BarEntry((viewModel.day+1).toFloat(), time.toFloat())
+            setChartDate()
+            viewModel.compareChartTimeMax(time)
+            viewModel.avgCharTime()
+            settingText()
+        }else if(hidden)
+            viewModel.minusChartTime()
+    }
     //Init Setting
     private fun init(){
         setEntries()

@@ -70,13 +70,13 @@
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
             android:fontFamily="@font/font_main"
             android:text="@string/txt_totalTime"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/chart_totalTime"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/textView16"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView16" />
 
         <TextView
             android:id="@+id/chart_totalTime"

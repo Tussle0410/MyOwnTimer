@@ -1,5 +1,6 @@
 package com.tussle.myowntimer.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -66,6 +67,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     lateinit var month : String
     lateinit var day : String
     lateinit var dayOfWeek : String
+    var curCalendarDate : String = date
     init {
         _countUpButtonEvent.value = Event(true)
         title = GlobalApplication.prefs.titleGetString("title","")
@@ -251,6 +253,10 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     fun sumChartTime(time:Int){
         chartSumTime+=time.toLong()
     }
+    //Minus ChartTime
+    fun minusChartTime(){
+        chartSumTime-= getCalendarTimeHashTime(date)!!
+    }
     //Avg ChartTime
     fun avgCharTime(){
         if(chartTimeCount!=0)
@@ -298,10 +304,14 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
         return chartDate.value != date.substring(0,7)
     }
     //TitleTimeUpdate
-    fun titleTimeUpdate(){
+    private fun titleTimeUpdate(){
         CoroutineScope(Dispatchers.IO).launch {
             repo.titleTimeUpdate(wholeSaveTime, title)
         }
+    }
+    //curCalendarDate Value Change
+    fun setCalendarDate(date : String){
+        curCalendarDate = date
     }
     //Convert MillSec -> HH:MM:SS
     fun timeConvert(sec : Long) : String{
