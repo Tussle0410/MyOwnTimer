@@ -1,8 +1,7 @@
 package com.tussle.myowntimer.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 
-class SettingViewModel(application: Application) : AndroidViewModel(application) {
+class SettingViewModel : ViewModel() {
 
 }

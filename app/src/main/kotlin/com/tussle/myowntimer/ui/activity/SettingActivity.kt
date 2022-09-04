@@ -18,5 +18,16 @@ class SettingActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.setting_page)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        init()
+    }
+    //Setting Activity Init
+    private fun init(){
+        setButton()
+    }
+    //Setting Activity Button Setting
+    private fun setButton(){
+        binding.settingBackButton.setOnClickListener {
+            finish()
+        }
     }
 }
