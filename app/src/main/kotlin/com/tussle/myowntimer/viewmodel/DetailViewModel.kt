@@ -30,7 +30,6 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     private val _getTodoEvent = MutableLiveData<Event<Boolean>>()
     private var countUpCheck : Boolean = false
     private var countDownCheck : Boolean = false
-    private var countDownEndCheck : Boolean = false
     val date = GlobalApplication.prefs.timeGetString("date","")
     var chartDate = MutableLiveData<String>()
     var title : String
@@ -58,7 +57,6 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     var countDownTime : Long = 0L
     private var countUpSaveTime : Long = 0L
     private var countDownSaveTime : Long = 0L
-    private var wholeSaveTime : Long = 0L
     var chartMaxTime : Long = 0L
     var chartSumTime : Long = 0L
     var chartAvgTime : Long = 0L
@@ -146,8 +144,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
             val tempTime = get(date)?.plus(time)
             put(date, tempTime!!.toInt())
         }
-        wholeSaveTime += time
-        titleTimeUpdate()
+        titleTimeUpdate(time)
     }
     //CountUp Start
     fun countUpStart(){
@@ -156,20 +153,16 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     }
     //Time Update
     fun timeUpdate(check: Boolean) : Boolean{
-        var time = if(check)
-            (countUpSaveTime - countUpPauseTime)/1000
+        val time = if(check)
+            countUpSaveTime/1000 - countUpPauseTime/1000
         else
-            (countDownSaveTime - countDownPauseTime)/1000
+            countDownSaveTime/1000 - countDownPauseTime/1000
         if(time>=3 && check){
             countUpSaveTime = countUpPauseTime
             calendarTimeUpdate(time)
             return true
         }else if(!check){
             countDownSaveTime = countDownPauseTime
-            if(countDownEndCheck){
-                time -= 1L
-                countDownEndCheck = false
-            }
             calendarTimeUpdate(time)
             return true
         }
@@ -191,8 +184,21 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     fun countDownEnd(){
         countDownTime = 0L
         countDownPauseTime = 0L
-        countDownEndCheck = true
         countDownStart()
+    }
+    //CountDownTimeSetting
+    fun dialogInfoToCountDownTime(h : Int, m : Int, s : Int){
+        countDownTime = (h*3600 + m*60 + s)*1000.toLong()
+    }
+    fun countDownPauseTimeSet(time : Long){
+        countDownPauseTime = time
+    }
+    fun countDownSaveTimeSet(time : Long){
+        countDownSaveTime = time
+    }
+    //Init CountDownPauseTime
+    fun initCountDownPauseTime(){
+        countDownPauseTime = 0L
     }
     //Set Current Date
     fun setDate(){
@@ -304,9 +310,9 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
         return chartDate.value != date.substring(0,7)
     }
     //TitleTimeUpdate
-    private fun titleTimeUpdate(){
+    private fun titleTimeUpdate(time : Long){
         CoroutineScope(Dispatchers.IO).launch {
-            repo.titleTimeUpdate(wholeSaveTime, title)
+            repo.titleTimeUpdate(time, title)
         }
     }
     //curCalendarDate Value Change
@@ -322,5 +328,9 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
         val txtM = if(m<10) "0$m" else m.toString()
         val txtS = if(s<10) "0$s" else s.toString()
         return "$txtH:$txtM:$txtS"
+    }
+    //ProgressValue Cal
+    fun progressValueCal(time : Long) : Int{
+        return (((time/1000).toFloat() / (countDownTime/1000))*100).toInt()
     }
 }

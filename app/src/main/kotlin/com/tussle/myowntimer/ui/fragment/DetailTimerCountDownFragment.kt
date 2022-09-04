@@ -1,13 +1,20 @@
 package com.tussle.myowntimer.ui.fragment
 
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.media.MediaPlayer
+import android.media.RingtoneManager
+import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -24,18 +31,15 @@ class DetailTimerCountDownFragment : Fragment() {
         ViewModelProvider(requireActivity(),factory).get(DetailViewModel::class.java)
     }
     private lateinit var binding : DetailTimerCountdownFrameBinding
+    private lateinit var countDownTimer : CountDownTimer
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.detail_timer_countdown_frame,container,false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = requireActivity()
-        init()
+        setButton()
         return binding.root
     }
-
-    private fun init(){
-        setButton()
-        setChronometer()
-    }
+    //CountDown SetTime Dialog Setting
     private fun setDialog(){
         val bindingDialog = DetailTimerCountdownSetTimeBinding.inflate(LayoutInflater.from(requireContext()))
         with(bindingDialog){
@@ -50,36 +54,33 @@ class DetailTimerCountDownFragment : Fragment() {
             .setTitle("시간 설정")
             .setView(bindingDialog.root)
             .setPositiveButton("확 인") { _, _ ->
-                viewModel.countDownTime =
-                    (bindingDialog.setHour.value * 3600 +
-                            bindingDialog.setMin.value * 60 +bindingDialog.setSecond.value).toLong()
-                viewModel.countDownPauseTime = 0L
-                binding.countDownChronometer.visibility = View.INVISIBLE
-                binding.countDownText.visibility = View.VISIBLE
-                binding.countDownText.text = viewModel.timeConvert(viewModel.countDownTime)
+                viewModel.dialogInfoToCountDownTime(
+                    bindingDialog.setHour.value,bindingDialog.setMin.value, bindingDialog.setSecond.value)
+                viewModel.initCountDownPauseTime()
+                viewModel.countDownSaveTimeSet(viewModel.countDownTime)
+                binding.countDownText.text = viewModel.timeConvert(viewModel.countDownTime/1000)
                 binding.countDownStartButton.isEnabled = true
+                setCountDownTimer(viewModel.countDownTime)
             }
             .show()
 
     }
+    //CountDown Fragment Start, End.. Button Setting
     private fun setButton(){
         viewModel.countDownEvent.observe(requireActivity()) {
             if(!it){
-                binding.countDownChronometer.base = SystemClock.elapsedRealtime() + viewModel.countDownPauseTime
-                binding.countDownChronometer.start()
-                if(!binding.countDownChronometer.isVisible){
-                    binding.countDownChronometer.visibility = View.VISIBLE
-                    binding.countDownText.visibility = View.INVISIBLE
-                }
+                countDownTimer.start()
                 binding.countDownStartButton.text = resources.getString(R.string.txt_stop)
                 binding.setTimeButton.isEnabled = false
                 Toast.makeText(requireContext(),"타이머 실행중에는 시간 설정을 하실 수 없습니다.",Toast.LENGTH_SHORT).show()
+                setNotification()
             }else{
-                binding.countDownChronometer.stop()
-                viewModel.countDownPauseTime = binding.countDownChronometer.base - SystemClock.elapsedRealtime()
+                countDownTimer.cancel()
+                setCountDownTimer(viewModel.countDownPauseTime)
                 binding.countDownStartButton.text = resources.getString(R.string.txt_start)
                 binding.setTimeButton.isEnabled = true
                 viewModel.timeUpdate(false)
+                removeNotification()
             }
         }
         binding.setTimeButton.setOnClickListener {
@@ -87,16 +88,41 @@ class DetailTimerCountDownFragment : Fragment() {
             viewModel.saveTimeInit(false)
         }
     }
-    private fun setChronometer(){
-        binding.countDownChronometer.setOnChronometerTickListener {
-            val time = viewModel.countDownTime - (SystemClock.elapsedRealtime() - it.base)/1000
-            if(time<0){
+    //CountDown Timer Start Notification
+    private fun setNotification(){
+        val builder = NotificationCompat.Builder(requireContext(), "Start")
+            .setSmallIcon(R.drawable.icon_timer)
+            .setContentTitle("타이머가 진행중입니다.")
+            .setOngoing(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val manager : NotificationManager =
+            requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channel = NotificationChannel("Start","Basic",NotificationManager.IMPORTANCE_DEFAULT)
+            manager.createNotificationChannel(channel)
+        }
+        manager.notify(1, builder.build())
+    }
+    //CountDown Timer End Notification
+    private fun removeNotification(){
+        NotificationManagerCompat.from(requireContext()).cancel(1)
+    }
+    //setCountDownTimer
+    private fun setCountDownTimer(time : Long){
+        countDownTimer = object : CountDownTimer(time, 1000){
+            override fun onTick(p0: Long) {
+                binding.countDownText.text = viewModel.timeConvert(p0/1000)
+                viewModel.countDownPauseTimeSet(p0)
+                binding.progressBar.progress = viewModel.progressValueCal(p0)
+            }
+            override fun onFinish() {
+                removeNotification()
                 viewModel.countDownEnd()
                 binding.countDownStartButton.isEnabled = false
                 binding.countDownText.text = resources.getString(R.string.txt_initTime)
-            }else{
-                binding.countDownChronometer.format = viewModel.timeConvert(time)
-                binding.progressBar.progress = ((time.toFloat()/viewModel.countDownTime)*100).toInt()
+                val player = MediaPlayer.create(requireContext(), R.raw.timer_end_sound)
+                player.start()
             }
         }
     }
