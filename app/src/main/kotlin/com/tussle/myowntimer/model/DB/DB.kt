@@ -7,7 +7,7 @@ import com.tussle.myowntimer.model.CalendarTodo
 import com.tussle.myowntimer.model.Title
 import com.tussle.myowntimer.model.Todo
 
-@Database(entities = [Title::class, Todo::class, CalendarTime::class, CalendarTodo::class], version = 8)
+@Database(entities = [Title::class, Todo::class, CalendarTime::class, CalendarTodo::class], version = 9)
 abstract class DB : RoomDatabase(){
     abstract fun dao() : DAO
 }

@@ -8,6 +8,7 @@ import com.tussle.myowntimer.sharedPreference.GlobalApplication
 class Repo{
     private val dbInstance = GlobalApplication.databaseInstance.dao()
 
+    //Insert Call
     suspend fun titleInsert(title: Title){
         dbInstance.titleAdd(title)
     }
@@ -20,6 +21,7 @@ class Repo{
     suspend fun calendarTodoInsert(title:String, date : String, todo : String, success: Boolean){
         dbInstance.calendarTodoAdd(title, date, todo, success)
     }
+    //Update Call
     suspend fun todoSuccessUpdate(title : String, todo : String, success: Boolean){
         dbInstance.todoSuccessUpdate(title, todo, success)
     }
@@ -38,6 +40,20 @@ class Repo{
     suspend fun titleTimeUpdate(time:Long, title:String){
         dbInstance.titleTimeUpdate(time, title)
     }
+    suspend fun todoUpdate(title:String, todo:String, previousTodo:String){
+        dbInstance.todoUpdate(todo,title,previousTodo)
+    }
+    suspend fun calendarTodoUpdate(title:String, todo: String, date: String, previousTodo: String){
+        dbInstance.calendarTodoUpdate(todo,title, date,previousTodo)
+    }
+    //Delete Call
+    suspend fun deleteTodo(todo :String, title : String){
+        dbInstance.deleteTodo(title, todo)
+    }
+    suspend fun deleteCalendarTodo(todo:String, title : String, date: String){
+        dbInstance.deleteCalendarTodo(title, todo, date)
+    }
+    //Select Call
     suspend fun getInfo() = dbInstance.getInfo()
     suspend fun getTitleCount() = dbInstance.getTitleCount()
     suspend fun getTitle() = dbInstance.getTitle()

@@ -5,16 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tussle.myowntimer.databinding.DetailTodoItemBinding
 import com.tussle.myowntimer.model.Todo
-import com.tussle.myowntimer.ui.listener.SuccessUpdate
+import com.tussle.myowntimer.ui.listener.TodoSuccessUpdate
+import com.tussle.myowntimer.ui.listener.TodoTextUpdate
 
-class DetailTodoRecyclerAdapter(val data : MutableList<Todo>, listener : SuccessUpdate) : RecyclerView.Adapter<DetailTodoRecyclerAdapter.ToDoViewHolder>(){
-    private val mCallBack = listener
+class DetailTodoRecyclerAdapter(val data : MutableList<Todo>, successListener : TodoSuccessUpdate,
+                        updateListener : TodoTextUpdate
+): RecyclerView.Adapter<DetailTodoRecyclerAdapter.ToDoViewHolder>(){
+    private val successCallBack = successListener
+    private val updateCallBack = updateListener
     inner class ToDoViewHolder(private val binding : DetailTodoItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun setting(todo : Todo){
             binding.todoTxt.text = todo.todo
             binding.todoCheckBox.isChecked = todo.success!!
             binding.todoCheckBox.setOnCheckedChangeListener { _, _ ->
-                mCallBack.SuccessUpdate(todo.todo!!, binding.todoCheckBox.isChecked)
+                successCallBack.successUpdate(todo.todo!!, binding.todoCheckBox.isChecked)
+            }
+            binding.todoTxt.setOnLongClickListener {
+                updateCallBack.todoTextUpdateListener(todo.todo!!)
+                true
             }
         }
     }

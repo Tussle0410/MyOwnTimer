@@ -23,6 +23,11 @@
     //TodoFragment Frame Text
     <string name="txt_todo_hint">할 일을 적어주세요.</string>
     <string name="txt_todo_dialog_success">현재 성공 여부</string>
+    <string name="txt_todoAdd_description">할 일 추가</string>
+    <string name="txt_todoUpdate_description">할 일을 꾹 누르시면 수정이 가능합니다.</string>
+    <string name="txt_todo_update_cancel">취 소</string>
+    <string name="txt_todo_update_update">수 정</string>
+    <string name="txt_todo_update_delete">삭 제</string>
     //TimerFragment Frame Text
     <string name="txt_stopwatch">스톱워치</string>
     <string name="txt_start">시 작</string>

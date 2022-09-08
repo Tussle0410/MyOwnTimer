@@ -1,6 +1,5 @@
 package com.tussle.myowntimer.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,8 +25,8 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     private val _countDownButtonEvent = MutableLiveData<Event<Boolean>>()
     private val _countUpEvent = MutableLiveData<Boolean>()
     private val _countDownEvent = MutableLiveData<Boolean>()
-    private val _insertTodoEvent = MutableLiveData<Event<Boolean>>()
-    private val _getTodoEvent = MutableLiveData<Event<Boolean>>()
+    private val _todoUpdateEvent = MutableLiveData<Event<Boolean>>()
+    private val _todoDeleteEvent = MutableLiveData<Event<Boolean>>()
     private var countUpCheck : Boolean = false
     private var countDownCheck : Boolean = false
     val date = GlobalApplication.prefs.timeGetString("date","")
@@ -47,10 +46,10 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
         get() = _countUpEvent
     val countDownEvent : LiveData<Boolean>
         get() = _countDownEvent
-    val insertTodoEvent : LiveData<Event<Boolean>>
-        get() = _insertTodoEvent
-    val getTodoEvent : LiveData<Event<Boolean>>
-        get() = _getTodoEvent
+    val todoUpdateEvent : LiveData<Event<Boolean>>
+        get() = _todoUpdateEvent
+    val todoDeleteEvent : LiveData<Event<Boolean>>
+        get() = _todoDeleteEvent
     //Date And Time Info Set
     var countUpPauseTime : Long = 0L
     var countDownPauseTime : Long = 0L
@@ -111,7 +110,6 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
             repo.getTodo(title).let {
                 todoInfo.postValue(it)
             }
-            _getTodoEvent.postValue(Event(true))
         }
     }
     //todoInsert Method
@@ -126,7 +124,6 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     //Add todoInfo List
     private fun addTodo(todo : Todo){
         todoInfo.value!!.add(todo)
-        _insertTodoEvent.value = Event(true)
     }
     //Update todo_Success
     fun todoSuccessUpdate(todo : String, success : Boolean){
@@ -135,6 +132,43 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
             repo.calendarTodoSuccessUpdate(title, todo, success, date)
         }
     }
+    //Update TodoText
+    fun todoUpdate(todo : String, previousTodo : String){
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.todoUpdate(title, todo, previousTodo)
+            repo.calendarTodoUpdate(title, todo, date, previousTodo)
+        }
+        updateTodoList(todo, previousTodo)
+    }
+    //Update todoInfo List
+    private fun updateTodoList(todo : String, previousTodo: String){
+        for(cur in todoInfo.value!!){
+            if(cur.todo == previousTodo){
+                cur.todo = todo
+                _todoUpdateEvent.value = Event(true)
+                return
+            }
+        }
+    }
+    //DeleteTodo
+    fun deleteTodo(todo : String){
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.deleteTodo(todo, title)
+            repo.deleteCalendarTodo(todo, title, date)
+        }
+        deleteTodoList(todo)
+    }
+    //Delete TodoList
+    private fun deleteTodoList(todo : String){
+        for(i in 0..todoInfo.value!!.size){
+            if(todoInfo.value!![i].todo == todo){
+                todoInfo.value!!.removeAt(i)
+                _todoDeleteEvent.value = Event(true)
+                return
+            }
+        }
+    }
+
     //timeUpdate
     private fun calendarTimeUpdate(time : Long){
         CoroutineScope(Dispatchers.IO).launch {

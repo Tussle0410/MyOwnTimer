@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
 )
 data class Todo(
     val todo_title : String?,
-    val todo : String?,
+    var todo : String?,
     val success : Boolean? = false,
     @PrimaryKey(autoGenerate = true)
     var id : Int? = 0

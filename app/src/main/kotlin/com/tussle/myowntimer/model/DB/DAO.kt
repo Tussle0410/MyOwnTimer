@@ -38,6 +38,12 @@ interface DAO {
     @Query("UPDATE Title SET todayTime = todayTime + :time, monthTime = monthTime + :time, totalTime = totalTime + :time WHERE title = :title")
     suspend fun titleTimeUpdate(time : Long, title : String)
 
+    @Query("UPDATE Todo SET todo = :todo WHERE todo_title = :title AND todo = :previousTodo")
+    suspend fun todoUpdate(todo: String, title : String, previousTodo:String)
+
+    @Query("UPDATE CalendarTodo SET todo = :todo WHERE todo_date = :date AND calendar_title = :title AND todo = :previousTodo")
+    suspend fun calendarTodoUpdate(todo: String, title: String, date: String, previousTodo: String)
+
     //Room DB SELECT SQL
     @Query("SELECT COUNT(title) FROM Title")
     suspend fun getTitleCount() : Int
@@ -60,5 +66,10 @@ interface DAO {
     @Query("SELECT * FROM CalendarTodo WHERE calendar_title = :title AND todo_date = :date")
     suspend fun getCalendarTodo(title : String, date : String) : MutableList<CalendarTodo>
     //Room DB DELETE SQL
+    @Query("DELETE FROM Todo WHERE todo_title = :title AND todo = :todo")
+    suspend fun deleteTodo(title : String, todo : String)
+
+    @Query("DELETE FROM CalendarTodo WHERE calendar_title = :title AND todo = :todo AND todo_date = :date")
+    suspend fun deleteCalendarTodo(title : String, todo : String, date : String)
 }
 
