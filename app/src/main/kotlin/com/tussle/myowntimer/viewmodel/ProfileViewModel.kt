@@ -17,11 +17,18 @@ class ProfileViewModel(private val repo : Repo) : ViewModel() {
     private var _titleAvgTime = 0
     private var _titleSumTime = 0
     val titleInfo = MutableLiveData<List<Title>>()
+    init {
+        titleCount.value = "0"
+        titleMaxTime.value = "00:00:00"
+        titleAvgTime.value = "00:00:00"
+        titleSumTime.value = "00:00:00"
+    }
     //Get Room DB Title Info
     fun getTitleInfo(){
         CoroutineScope(Dispatchers.IO).launch {
             repo.getTitle().let {
-                titleInfo.postValue(it)
+                if(it.isNotEmpty())
+                    titleInfo.postValue(it)
             }
         }
     }
