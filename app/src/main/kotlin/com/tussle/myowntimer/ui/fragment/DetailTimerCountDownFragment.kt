@@ -6,9 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.media.MediaPlayer
 import android.media.RingtoneManager
-import android.os.Build
-import android.os.Bundle
-import android.os.CountDownTimer
+import android.os.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -98,10 +96,8 @@ class DetailTimerCountDownFragment : Fragment() {
 
         val manager : NotificationManager =
             requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val channel = NotificationChannel("Start","Basic",NotificationManager.IMPORTANCE_DEFAULT)
-            manager.createNotificationChannel(channel)
-        }
+        val channel = NotificationChannel("Start","Basic",NotificationManager.IMPORTANCE_DEFAULT)
+        manager.createNotificationChannel(channel)
         manager.notify(1, builder.build())
     }
     //CountDown Timer End Notification
@@ -123,6 +119,9 @@ class DetailTimerCountDownFragment : Fragment() {
                 binding.countDownText.text = resources.getString(R.string.txt_initTime)
                 val player = MediaPlayer.create(requireContext(), R.raw.timer_end_sound)
                 player.start()
+                val vibrator = requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                val vibratorPattern = VibrationEffect.createOneShot(1000,VibrationEffect.DEFAULT_AMPLITUDE)
+                vibrator.vibrate(vibratorPattern)
             }
         }
     }
