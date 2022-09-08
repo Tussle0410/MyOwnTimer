@@ -1,12 +1,10 @@
 package com.tussle.myowntimer.ui.activity
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -16,7 +14,6 @@ import com.tussle.myowntimer.databinding.MainPageBinding
 import com.tussle.myowntimer.event.EventObserver
 import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DB.RepoFactory
-import com.tussle.myowntimer.sharedPreference.GlobalApplication
 import com.tussle.myowntimer.ui.adapter.MainViewPagerAdapter
 import com.tussle.myowntimer.ui.listener.CheckCalendarTime
 import com.tussle.myowntimer.viewmodel.MainViewModel

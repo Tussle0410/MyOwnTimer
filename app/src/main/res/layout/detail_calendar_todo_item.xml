@@ -11,8 +11,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_main"
             android:layout_marginStart="10dp"
-            android:text="할ㅇ머ㅏㄹ미"
-            android:textColor="@color/black"
+            android:textColor="@color/bold_gray"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

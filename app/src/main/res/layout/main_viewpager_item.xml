@@ -14,7 +14,7 @@
         android:fontFamily="@font/font_main"
         android:padding="5dp"
         android:textColor="@color/main_color"
-        android:textSize="30sp"
+        android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +27,7 @@
         android:layout_marginStart="15dp"
         android:fontFamily="@font/font_main"
         android:textColor="@color/successColor"
-        android:textSize="28sp"
+        android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -39,7 +39,7 @@
         android:fontFamily="@font/font_main"
         android:text="@string/txt_slash"
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/goalTodo"
         app:layout_constraintStart_toEndOf="@+id/goalTodo"
         app:layout_constraintTop_toTopOf="@+id/goalTodo" />
@@ -51,7 +51,7 @@
         android:padding="5dp"
         android:fontFamily="@font/font_main"
         android:textColor="@color/black"
-        android:textSize="28sp"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/goalTodo"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toTopOf="@+id/goalTodo" />
@@ -65,7 +65,7 @@
         android:layout_marginStart="15dp"
         android:fontFamily="@font/font_main"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="19sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/goalTodo" />
 
@@ -78,7 +78,7 @@
         android:padding="5dp"
         android:layout_marginStart="15dp"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="19sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_viewpager_Todo1" />
 
@@ -90,8 +90,8 @@
         android:layout_marginTop="5dp"
         android:padding="5dp"
         android:layout_marginStart="15dp"
-        android:textColor="@color/successColor"
-        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textSize="19sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_viewpager_Todo2" />
 
@@ -105,7 +105,7 @@
         android:layout_marginStart="15dp"
         android:text="@string/txt_commas"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_viewpager_Todo3" />
 
@@ -113,7 +113,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:weightSum="100"
         app:layout_constraintEnd_toEndOf="parent"
