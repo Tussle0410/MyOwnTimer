@@ -29,7 +29,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:fontFamily="@font/font_main"
             android:text="@{viewModel.continueDay}"
             android:textColor="@color/white"
@@ -69,7 +69,8 @@
             android:padding="5dp"
             android:src="@drawable/icon_setting"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/txt_main_setting_description"/>
 
         <ImageButton
             android:id="@+id/main_profile_button"
@@ -79,7 +80,8 @@
             android:padding="5dp"
             android:src="@drawable/icon_profile"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/txt_main_profile_description"/>
 
 
         <Button
@@ -121,7 +123,7 @@
                 android:id="@+id/main_viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/border_main"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

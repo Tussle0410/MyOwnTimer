@@ -15,8 +15,14 @@ import java.util.*
 
 class MainViewModel(private val repo : Repo) : ViewModel(){
     private val _insertEvent = MutableLiveData<Event<Boolean>>()
+    private val _updateEvent = MutableLiveData<Event<Boolean>>()
+    private val _deleteEvent = MutableLiveData<Event<Boolean>>()
     val insertEvent : LiveData<Event<Boolean>>
         get() = _insertEvent
+    val updateEvent : LiveData<Event<Boolean>>
+        get() = _updateEvent
+    val deleteEvent : LiveData<Event<Boolean>>
+        get() = _deleteEvent
     val viewPagerInfo = MutableLiveData<MutableList<ViewPagerModel>>()
     val titleInfo = MutableLiveData<List<TitleAndTodo>>()
     val continueDay = MutableLiveData<String>()
@@ -44,6 +50,40 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
         _insertEvent.value = Event(true)
         titleCount++
         GlobalApplication.prefs.titleSetInt("titleCount",titleCount)
+    }
+    //Room DB Title Table Update
+    fun updateTitle(title : String, previousTitle : String){
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.titleUpdate(title, previousTitle)
+        }
+        updateViewPagerInfo(title, previousTitle)
+    }
+    //ViewPagerInfo Title Update
+    private fun updateViewPagerInfo(title : String, previousTitle: String){
+        for( info in viewPagerInfo.value!!){
+            if(info.title == previousTitle){
+                info.title = title
+                break;
+            }
+        }
+        _updateEvent.value = Event(true)
+    }
+    //Room DB Title Table Delete
+    fun deleteTitle(title:String){
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.deleteTitle(title)
+        }
+        deleteViewPagerInfo(title)
+    }
+    //ViewPagerInfo Title Update
+    private fun deleteViewPagerInfo(title : String){
+        for(i in 0..viewPagerInfo.value!!.size){
+            if(viewPagerInfo.value!![i].title == title){
+                viewPagerInfo.value!!.removeAt(i)
+                break
+            }
+        }
+        _deleteEvent.value = Event(true)
     }
     //TitleAndTodo Info -> ViewPagerModel info
     fun setList(){

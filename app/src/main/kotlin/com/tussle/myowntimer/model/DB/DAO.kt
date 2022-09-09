@@ -44,6 +44,9 @@ interface DAO {
     @Query("UPDATE CalendarTodo SET todo = :todo WHERE todo_date = :date AND calendar_title = :title AND todo = :previousTodo")
     suspend fun calendarTodoUpdate(todo: String, title: String, date: String, previousTodo: String)
 
+    @Query("UPDATE Title SET title = :title WHERE title = :previousTitle")
+    suspend fun titleUpdate(title : String, previousTitle: String)
+
     //Room DB SELECT SQL
     @Query("SELECT COUNT(title) FROM Title")
     suspend fun getTitleCount() : Int
@@ -71,5 +74,8 @@ interface DAO {
 
     @Query("DELETE FROM CalendarTodo WHERE calendar_title = :title AND todo = :todo AND todo_date = :date")
     suspend fun deleteCalendarTodo(title : String, todo : String, date : String)
+
+    @Query("DELETE FROM Title WHERE title = :title")
+    suspend fun deleteTitle(title : String)
 }
 

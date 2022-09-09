@@ -11,10 +11,13 @@ import com.tussle.myowntimer.model.ViewPagerModel
 import com.tussle.myowntimer.sharedPreference.GlobalApplication
 import com.tussle.myowntimer.ui.activity.DetailActivity
 import com.tussle.myowntimer.ui.listener.CheckCalendarTime
+import com.tussle.myowntimer.ui.listener.TitleUpdate
 
-class MainViewPagerAdapter(val data : MutableList<ViewPagerModel>, context : Context, listener : CheckCalendarTime) : RecyclerView.Adapter<MainViewPagerAdapter.PageViewHolder>() {
+class MainViewPagerAdapter(val data : MutableList<ViewPagerModel>, context : Context, timeListener : CheckCalendarTime,
+                updateListener : TitleUpdate) : RecyclerView.Adapter<MainViewPagerAdapter.PageViewHolder>() {
     val successColor = context.getColor(R.color.successColor)
-    val mCallback = listener
+    val timeCallBack = timeListener
+    val updateCallBack = updateListener
     inner class PageViewHolder(private val binding : MainViewpagerItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun setting(item : ViewPagerModel){
             binding.title.text = item.title
@@ -46,9 +49,12 @@ class MainViewPagerAdapter(val data : MutableList<ViewPagerModel>, context : Con
             binding.timeTotal.text = timeConverter(item.totalTime)
             binding.viewPager.setOnClickListener { view ->
                 GlobalApplication.prefs.titleSetString("title", item.title)
-                mCallback.checkCalendarTime(item.title)
+                timeCallBack.checkCalendarTime(item.title)
                 val intent = Intent(view.context, DetailActivity::class.java)
                 view.context.startActivity(intent)
+            }
+            binding.titleUpdate.setOnClickListener {
+                updateCallBack.titleUpdate(item.title)
             }
         }
         private fun setTodo1TextColor(){

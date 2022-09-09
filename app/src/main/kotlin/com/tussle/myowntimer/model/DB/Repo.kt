@@ -46,12 +46,18 @@ class Repo{
     suspend fun calendarTodoUpdate(title:String, todo: String, date: String, previousTodo: String){
         dbInstance.calendarTodoUpdate(todo,title, date,previousTodo)
     }
+    suspend fun titleUpdate(title : String, previousTitle : String){
+        dbInstance.titleUpdate(title, previousTitle)
+    }
     //Delete Call
     suspend fun deleteTodo(todo :String, title : String){
         dbInstance.deleteTodo(title, todo)
     }
     suspend fun deleteCalendarTodo(todo:String, title : String, date: String){
         dbInstance.deleteCalendarTodo(title, todo, date)
+    }
+    suspend fun deleteTitle(title:String){
+        dbInstance.deleteTitle(title)
     }
     //Select Call
     suspend fun getInfo() = dbInstance.getInfo()

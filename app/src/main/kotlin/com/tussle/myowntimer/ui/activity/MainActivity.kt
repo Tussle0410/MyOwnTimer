@@ -11,16 +11,18 @@ import com.google.android.gms.ads.MobileAds
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.MainAddDialogBinding
 import com.tussle.myowntimer.databinding.MainPageBinding
+import com.tussle.myowntimer.databinding.UpdateDialogBinding
 import com.tussle.myowntimer.event.EventObserver
 import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.ui.adapter.MainViewPagerAdapter
 import com.tussle.myowntimer.ui.listener.CheckCalendarTime
+import com.tussle.myowntimer.ui.listener.TitleUpdate
 import com.tussle.myowntimer.viewmodel.MainViewModel
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
-class MainActivity : AppCompatActivity(), CheckCalendarTime {
+class MainActivity : AppCompatActivity(), CheckCalendarTime, TitleUpdate {
     private val viewModel : MainViewModel by lazy {
         val factory = RepoFactory(Repo())
         ViewModelProvider(this, factory).get(MainViewModel::class.java)
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity(), CheckCalendarTime {
         listSetting()
         adsSetting()
         setProfileAndSettingButton()
-        setAddButton()
+        setButton()
         viewModel.setDate()
     }
     private fun listSetting(){
@@ -55,12 +57,18 @@ class MainActivity : AppCompatActivity(), CheckCalendarTime {
             viewModel.setList()
             pageSetting()
         }
-        viewModel.insertEvent.observe(this,EventObserver{
+        viewModel.insertEvent.observe(this, EventObserver{
+            viewPagerAdapter.notifyDataSetChanged()
+        })
+        viewModel.updateEvent.observe(this, EventObserver{
+            viewPagerAdapter.notifyDataSetChanged()
+        })
+        viewModel.deleteEvent.observe(this, EventObserver{
             viewPagerAdapter.notifyDataSetChanged()
         })
     }
     //Set Main Page TitleAdd Button
-    private fun setAddButton(){
+    private fun setButton(){
         binding.addButton.setOnClickListener {
             val bindingDialog = MainAddDialogBinding.inflate(LayoutInflater.from(binding.root.context))
             AlertDialog.Builder(this)
@@ -86,7 +94,7 @@ class MainActivity : AppCompatActivity(), CheckCalendarTime {
     }
     //Set ViewPager2
     private fun pageSetting(){
-        viewPagerAdapter = MainViewPagerAdapter(viewModel.viewPagerInfo.value!!,this, this)
+        viewPagerAdapter = MainViewPagerAdapter(viewModel.viewPagerInfo.value!!,this, this, this)
         with(binding.mainViewPager){
             offscreenPageLimit
             adapter = viewPagerAdapter
@@ -102,5 +110,31 @@ class MainActivity : AppCompatActivity(), CheckCalendarTime {
 
     override fun checkCalendarTime(title: String) {
         viewModel.calendarTimeCheck(title)
+    }
+
+    override fun titleUpdate(previousTitle: String) {
+        val bindingDialog = UpdateDialogBinding.inflate(LayoutInflater.from(binding.root.context))
+        bindingDialog.todoUpdateDialogEdit.setText(previousTitle)
+        val alertDialog = AlertDialog.Builder(this)
+            .setTitle("목표 수정하기")
+            .setView(bindingDialog.root)
+            .show()
+        bindingDialog.todoUpdateCancel.setOnClickListener {
+            viewModel.updateTitle(bindingDialog.todoUpdateDialogEdit.text.toString(), previousTitle)
+            alertDialog.cancel()
+        }
+        bindingDialog.todoUpdateUpdate.setOnClickListener {
+            alertDialog.cancel()
+        }
+        bindingDialog.todoUpdateDelete.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("정말 삭제하시겠습니까?")
+                .setPositiveButton("삭 제"){ _, _ ->
+                    viewModel.deleteTitle(previousTitle)
+                    alertDialog.cancel()
+                }
+                .setNegativeButton("취 소"){_, _ ->}
+                .show()
+        }
     }
 }

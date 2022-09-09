@@ -1,7 +1,7 @@
 package com.tussle.myowntimer.model
 
 data class ViewPagerModel(
-    val title : String,
+    var title : String,
     var goalTodo : String,
     var allTodo : String,
     val todo : MutableList<String?>,
