@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.DetailTodoAddDialogBinding
 import com.tussle.myowntimer.databinding.DetailTodoFrameBinding
-import com.tussle.myowntimer.databinding.DetailTodoUpdateDialogBinding
+import com.tussle.myowntimer.databinding.UpdateDialogBinding
 import com.tussle.myowntimer.event.EventObserver
 import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DB.RepoFactory
@@ -36,7 +36,7 @@ class DetailTodoFragment : Fragment(), TodoSuccessUpdate, TodoTextUpdate {
         viewModel.getTodoInfo()
         setAddButton()
         viewModel.todoInfo.observe(requireActivity()){
-                toDoSetting()
+            toDoSetting()
         }
         viewModel.todoUpdateEvent.observe(requireActivity(), EventObserver{
             recyclerAdapter.notifyDataSetChanged()
@@ -79,7 +79,7 @@ class DetailTodoFragment : Fragment(), TodoSuccessUpdate, TodoTextUpdate {
     }
     //TodoTextUpdate Interface Method
     override fun todoTextUpdateListener(previousTodo: String) {
-        val bindingDialog = DetailTodoUpdateDialogBinding.inflate(LayoutInflater.from(binding.root.context))
+        val bindingDialog = UpdateDialogBinding.inflate(LayoutInflater.from(binding.root.context))
         val alertDialog = AlertDialog.Builder(requireActivity())
             .setTitle("할 일 수정하기")
             .setView(bindingDialog.root)
@@ -92,11 +92,11 @@ class DetailTodoFragment : Fragment(), TodoSuccessUpdate, TodoTextUpdate {
         bindingDialog.todoUpdateDelete.setOnClickListener {
             AlertDialog.Builder(requireActivity())
                 .setTitle("정말 삭제하시겠습니까?")
-                .setPositiveButton("예") { _,_ ->
+                .setPositiveButton("삭 제") { _,_ ->
                     viewModel.deleteTodo(bindingDialog.todoUpdateDialogEdit.text.toString())
                     alertDialog.cancel()
                 }
-                .setNegativeButton("아니요"){ _,_ ->}
+                .setNegativeButton("취 소"){ _,_ ->}
                 .show()
         }
         bindingDialog.todoUpdateUpdate.setOnClickListener {
