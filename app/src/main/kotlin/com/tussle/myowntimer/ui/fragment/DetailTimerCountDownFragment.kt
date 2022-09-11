@@ -117,12 +117,24 @@ class DetailTimerCountDownFragment : Fragment() {
                 viewModel.countDownEnd()
                 binding.countDownStartButton.isEnabled = false
                 binding.countDownText.text = resources.getString(R.string.txt_initTime)
-                val player = MediaPlayer.create(requireContext(), R.raw.timer_end_sound)
-                player.start()
-                val vibrator = requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                val vibratorPattern = VibrationEffect.createOneShot(1000,VibrationEffect.DEFAULT_AMPLITUDE)
-                vibrator.vibrate(vibratorPattern)
+                when(viewModel.countDownAlarm){
+                    "sound" -> {setSound()}
+                    "vibrate" -> {setVibrate()}
+                    else -> {
+                        setSound()
+                        setVibrate()
+                    }
+                }
             }
         }
+    }
+    private fun setSound(){
+        val player = MediaPlayer.create(requireContext(), R.raw.timer_end_sound)
+        player.start()
+    }
+    private fun setVibrate(){
+        val vibrator = requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        val vibratorPattern = VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE)
+        vibrator.vibrate(vibratorPattern)
     }
 }

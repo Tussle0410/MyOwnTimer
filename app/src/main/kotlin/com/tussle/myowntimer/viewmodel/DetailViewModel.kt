@@ -32,6 +32,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     val date = GlobalApplication.prefs.timeGetString("date","")
     var chartDate = MutableLiveData<String>()
     var title : String
+    val countDownAlarm = GlobalApplication.prefs.settingGetString("alarm", "sound+vibrate")
     var todoInfo = MutableLiveData<MutableList<Todo>>()
     var calendarTimeInfo = MutableLiveData<MutableList<CalendarTime>>()
     var calendarTodoInfo = MutableLiveData<MutableList<CalendarTodo>>()

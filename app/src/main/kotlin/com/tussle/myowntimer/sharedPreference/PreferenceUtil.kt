@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 class PreferenceUtil(context : Context) {
     private val titlePrefs : SharedPreferences = context.getSharedPreferences("title",0)
     private val timePrefs : SharedPreferences = context.getSharedPreferences("time",0)
+    private val settingPrefs : SharedPreferences = context.getSharedPreferences("setting",0)
     fun titleGetString(key : String,value:String):String
             =titlePrefs.getString(key,value).toString()
     fun titleSetString(key : String,str:String){
@@ -25,6 +26,11 @@ class PreferenceUtil(context : Context) {
             =timePrefs.getInt(key,value)
     fun timeSetInt(key : String, num : Int){
         timePrefs.edit().putInt(key,num).apply()
+    }
+    fun settingGetString(key : String, str : String) : String?
+        =settingPrefs.getString(key, str)
+    fun settingSetString(key : String, str : String){
+        settingPrefs.edit().putString(key, str).apply()
     }
 
 }
