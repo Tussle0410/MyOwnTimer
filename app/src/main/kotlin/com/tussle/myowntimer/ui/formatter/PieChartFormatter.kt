@@ -6,7 +6,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 class PieChartFormatter : ValueFormatter() {
     override fun getFormattedValue(value: Float): String {
         val mValue = value.toInt()
-        Log.d("시간", mValue.toString())
         val h = mValue/3600
         val m = (mValue/60)%60
         val s = mValue%60
