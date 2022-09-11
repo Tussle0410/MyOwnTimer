@@ -80,8 +80,8 @@ class DetailTodoFragment : Fragment(), TodoSuccessUpdate, TodoTextUpdate {
     //TodoTextUpdate Interface Method
     override fun todoTextUpdateListener(previousTodo: String) {
         val bindingDialog = UpdateDialogBinding.inflate(LayoutInflater.from(binding.root.context))
+        bindingDialog.updateCategory.text = "할 일"
         val alertDialog = AlertDialog.Builder(requireActivity())
-            .setTitle("할 일 수정하기")
             .setView(bindingDialog.root)
             .show()
 

@@ -11,6 +11,7 @@
     <string name="txt_main_update_description">목표 업데이트</string>
     <string name="txt_main_profile_description">프로필 페이지 이동</string>
     <string name="txt_main_setting_description">설정 페이지 이동</string>
+    <string name="txt_main_update_title">수정하기</string>
     //ViewPager2 Item Text
     <string name="txt_slash">/</string>
     <string name="txt_today">오늘</string>
@@ -30,7 +31,7 @@
     <string name="txt_todoUpdate_description">할 일을 꾹 누르시면 수정이 가능합니다.</string>
     <string name="txt_todo_update_cancel">취 소</string>
     <string name="txt_todo_update_update">수 정</string>
-    <string name="txt_todo_update_delete">삭 제</string>
+    <string name="txt_todo_update_delete">삭제하기</string>
     //TimerFragment Frame Text
     <string name="txt_stopwatch">스톱워치</string>
     <string name="txt_start">시 작</string>

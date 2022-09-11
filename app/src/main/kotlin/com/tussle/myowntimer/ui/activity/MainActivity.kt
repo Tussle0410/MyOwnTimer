@@ -115,15 +115,15 @@ class MainActivity : AppCompatActivity(), CheckCalendarTime, TitleUpdate {
     override fun titleUpdate(previousTitle: String) {
         val bindingDialog = UpdateDialogBinding.inflate(LayoutInflater.from(binding.root.context))
         bindingDialog.todoUpdateDialogEdit.setText(previousTitle)
+        bindingDialog.updateCategory.text = "목 표"
         val alertDialog = AlertDialog.Builder(this)
-            .setTitle("목표 수정하기")
             .setView(bindingDialog.root)
             .show()
         bindingDialog.todoUpdateCancel.setOnClickListener {
-            viewModel.updateTitle(bindingDialog.todoUpdateDialogEdit.text.toString(), previousTitle)
             alertDialog.cancel()
         }
         bindingDialog.todoUpdateUpdate.setOnClickListener {
+            viewModel.updateTitle(bindingDialog.todoUpdateDialogEdit.text.toString(), previousTitle)
             alertDialog.cancel()
         }
         bindingDialog.todoUpdateDelete.setOnClickListener {
