@@ -42,12 +42,11 @@ class DetailChartFragment : Fragment() {
         if(!hidden){
             val time = viewModel.getCalendarTimeHashTime(viewModel.date)!!
             viewModel.sumChartTime(time)
-            entries[viewModel.day.toInt()] =
-                BarEntry((viewModel.day+1).toFloat(), time.toFloat())
-            setChartDate()
+            entries[viewModel.day.toInt()-1] = BarEntry(viewModel.day.toFloat() + 1, time.toFloat())
             viewModel.compareChartTimeMax(time)
             viewModel.avgCharTime()
             settingText()
+            setChartDate()
         }else if(hidden)
             viewModel.minusChartTime()
     }
