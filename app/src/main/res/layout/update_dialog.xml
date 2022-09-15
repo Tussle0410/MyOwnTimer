@@ -108,8 +108,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/todo_update_delete" />
 
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

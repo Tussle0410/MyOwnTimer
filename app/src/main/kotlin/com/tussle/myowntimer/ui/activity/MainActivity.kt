@@ -70,17 +70,21 @@ class MainActivity : AppCompatActivity(), CheckCalendarTime, TitleUpdate {
     //Set Main Page TitleAdd Button
     private fun setButton(){
         binding.addButton.setOnClickListener {
-            val bindingDialog = MainAddDialogBinding.inflate(LayoutInflater.from(binding.root.context))
-            AlertDialog.Builder(this)
-                .setTitle("목표 추가하기!")
-                .setView(bindingDialog.root)
-                .setPositiveButton("추가") { _, _ ->
-                    if (viewModel.titleCount < 10)
-                        viewModel.insertTitle(bindingDialog.mainDialogTitle.text.toString())
-                    else
-                        toast("목표를 10개 이상 초과할 수 없습니다.")
+            if(viewModel.titleCount>10)
+                toast("목표를 10개를 초과하지 못합니다.")
+            else{
+                val bindingDialog = MainAddDialogBinding.inflate(LayoutInflater.from(binding.root.context))
+                val alertDialog = AlertDialog.Builder(this)
+                    .setView(bindingDialog.root)
+                    .show()
+                bindingDialog.titleAddAdd.setOnClickListener {
+                    viewModel.insertTitle(bindingDialog.mainDialogTitle.text.toString())
+                    alertDialog.cancel()
                 }
-                .show()
+                bindingDialog.titleAddCancel.setOnClickListener {
+                    alertDialog.cancel()
+                }
+            }
         }
     }
     //Set Main Page Profile, Setting Button

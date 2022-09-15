@@ -53,15 +53,18 @@ class DetailTodoFragment : Fragment(), TodoSuccessUpdate, TodoTextUpdate {
                 Toast.makeText(requireContext(),"할 일을 5개까지 만들 수 있습니다.", Toast.LENGTH_SHORT).show()
             }else{
                 val bindingDialog = DetailTodoAddDialogBinding.inflate(LayoutInflater.from(binding.root.context))
-                AlertDialog.Builder(requireActivity())
-                    .setTitle("할 일 추가하기")
+                val alertDialog = AlertDialog.Builder(requireActivity())
                     .setView(bindingDialog.root)
-                    .setPositiveButton("추가") { _, _ ->
-                        viewModel.insertTodo(
-                            bindingDialog.todoDialogEdit.text.toString(),
-                            bindingDialog.todoDialogSuccess.isChecked)
-                    }
                     .show()
+                bindingDialog.todoAddCancel.setOnClickListener {
+                    alertDialog.cancel()
+                }
+                bindingDialog.todoAddAdd.setOnClickListener {
+                    viewModel.insertTodo(
+                        bindingDialog.todoDialogEdit.text.toString(),
+                        bindingDialog.todoDialogSuccess.isChecked)
+                    alertDialog.cancel()
+                }
             }
         }
     }

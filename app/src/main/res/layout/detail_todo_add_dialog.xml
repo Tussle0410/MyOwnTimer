@@ -1,39 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.google.android.material.textfield.TextInputLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="20">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/todo_dialog_edit"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_main"
+            android:padding="10dp"
+            android:text="@string/txt_main_add_title"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/bold_gray"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+        <TextView
+            android:id="@+id/add_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/font_main"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/txt_todo"
+            android:textColor="@color/bold_gray"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/gray"
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_category">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/todo_dialog_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/font_main"
+                android:hint="@string/txt_todo_hint"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/todo_dialog_success"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
             android:fontFamily="@font/font_main"
-            android:hint="@string/txt_todo_hint"
+            android:gravity="start|center"
+            android:layoutDirection="rtl"
+            android:text="@string/txt_todo_dialog_success"
+            android:textColorLink="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+
+        <Button
+            android:id="@+id/todo_add_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@color/main_color"
+            android:fontFamily="@font/font_main"
+            android:text="@string/text_add"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/todo_dialog_success"/>
+
+        <Button
+            android:id="@+id/todo_add_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@color/backgroundTransparency"
+            android:fontFamily="@font/font_main"
+            android:text="@string/txt_todo_update_cancel"
             android:textColor="@color/black"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:maxLength="20"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <CheckBox
-        android:id="@+id/todo_dialog_success"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorLink="@color/black"
-        android:fontFamily="@font/font_main"
-        android:textSize="20sp"
-        android:checked="false"
-        android:layoutDirection="rtl"
-        android:gravity="start|center"
-        android:text="@string/txt_todo_dialog_success" />
-</LinearLayout>
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/todo_add_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/todo_dialog_success" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

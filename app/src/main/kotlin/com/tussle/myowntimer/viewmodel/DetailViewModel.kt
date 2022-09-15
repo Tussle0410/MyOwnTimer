@@ -31,7 +31,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     private var countDownCheck : Boolean = false
     val date = GlobalApplication.prefs.timeGetString("date","")
     var chartDate = MutableLiveData<String>()
-    var title : String
+    var title = MutableLiveData<String>()
     val countDownAlarm = GlobalApplication.prefs.settingGetString("alarm", "sound+vibrate")
     var todoInfo = MutableLiveData<MutableList<Todo>>()
     var calendarTimeInfo = MutableLiveData<MutableList<CalendarTime>>()
@@ -60,7 +60,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     var chartMaxTime : Long = 0L
     var chartSumTime : Long = 0L
     var chartAvgTime : Long = 0L
-    var chartTimeCount : Int = 0
+    private var chartTimeCount : Int = 0
     lateinit var year : String
     lateinit var month : String
     lateinit var day : String
@@ -68,7 +68,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     var curCalendarDate : String = date
     init {
         _countUpButtonEvent.value = Event(true)
-        title = GlobalApplication.prefs.titleGetString("title","")
+        title.value = GlobalApplication.prefs.titleGetString("title","")
     }
     //Detail Page Bottom Menu Click Listener
     val bottomMenuClickListener =
@@ -108,17 +108,17 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     //getTodoInfo Method
     fun getTodoInfo(){
         CoroutineScope(Dispatchers.IO).launch {
-            repo.getTodo(title).let {
+            repo.getTodo(title.value!!).let {
                 todoInfo.postValue(it)
             }
         }
     }
     //todoInsert Method
     fun insertTodo(todo_txt : String, success : Boolean){
-        val todo = Todo(title, todo_txt, success)
+        val todo = Todo(title.value!!, todo_txt, success)
         CoroutineScope(Dispatchers.IO).launch {
-            repo.todoInsert(title, todo_txt, success)
-            repo.calendarTodoInsert(title, date, todo_txt, success)
+            repo.todoInsert(title.value!!, todo_txt, success)
+            repo.calendarTodoInsert(title.value!!, date, todo_txt, success)
         }
         addTodo(todo)
     }
@@ -129,15 +129,15 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     //Update todo_Success
     fun todoSuccessUpdate(todo : String, success : Boolean){
         CoroutineScope(Dispatchers.IO).launch {
-            repo.todoSuccessUpdate(title, todo, success)
-            repo.calendarTodoSuccessUpdate(title, todo, success, date)
+            repo.todoSuccessUpdate(title.value!!, todo, success)
+            repo.calendarTodoSuccessUpdate(title.value!!, todo, success, date)
         }
     }
     //Update TodoText
     fun todoUpdate(todo : String, previousTodo : String){
         CoroutineScope(Dispatchers.IO).launch {
-            repo.todoUpdate(title, todo, previousTodo)
-            repo.calendarTodoUpdate(title, todo, date, previousTodo)
+            repo.todoUpdate(title.value!!, todo, previousTodo)
+            repo.calendarTodoUpdate(title.value!!, todo, date, previousTodo)
         }
         updateTodoList(todo, previousTodo)
     }
@@ -154,8 +154,8 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     //DeleteTodo
     fun deleteTodo(todo : String){
         CoroutineScope(Dispatchers.IO).launch {
-            repo.deleteTodo(todo, title)
-            repo.deleteCalendarTodo(todo, title, date)
+            repo.deleteTodo(todo, title.value!!)
+            repo.deleteCalendarTodo(todo, title.value!!, date)
         }
         deleteTodoList(todo)
     }
@@ -173,7 +173,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     //timeUpdate
     private fun calendarTimeUpdate(time : Long){
         CoroutineScope(Dispatchers.IO).launch {
-            repo.timeUpdate(time, title, date)
+            repo.timeUpdate(time, title.value!!, date)
         }
         with(calendarTimeHash.value!!){
             val tempTime = get(date)?.plus(time)
@@ -247,7 +247,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     //Get CalendarTime Date
     fun getCalendarTime(){
         CoroutineScope(Dispatchers.IO).launch {
-            repo.getAllCalendarTime(title).let {
+            repo.getAllCalendarTime(title.value!!).let {
                     calendarTimeInfo.postValue(it)
             }
         }
@@ -255,7 +255,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     //Get CalendarTodo Date
     fun getCalendarTodo(date : String){
         CoroutineScope(Dispatchers.IO).launch {
-            repo.getCalendarTodo(title, date).let {
+            repo.getCalendarTodo(title.value!!, date).let {
                 calendarTodoInfo.postValue(it)
             }
         }
@@ -347,7 +347,7 @@ class DetailViewModel(private val repo : Repo) : ViewModel() {
     //TitleTimeUpdate
     private fun titleTimeUpdate(time : Long){
         CoroutineScope(Dispatchers.IO).launch {
-            repo.titleTimeUpdate(time, title)
+            repo.titleTimeUpdate(time, title.value!!)
         }
     }
     //curCalendarDate Value Change
