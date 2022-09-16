@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,8 +15,11 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.tussle.myowntimer.R
 import com.tussle.myowntimer.databinding.DetailChartFrameBinding
 import com.tussle.myowntimer.model.DB.Repo
@@ -107,6 +111,16 @@ class DetailChartFragment : Fragment() {
         val data = BarData(dataSet)
         data.barWidth = 0.3f
         data.setDrawValues(false)
+        binding.barChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener{
+            override fun onValueSelected(e: Entry?, h: Highlight?) {
+                if(e!!.y.toInt() != 0)
+                    Toast.makeText(requireContext(),
+                        (e!!.x-1).toInt().toString() + "일 " + viewModel.timeConvert(e!!.y.toLong()),
+                        Toast.LENGTH_SHORT).show()
+
+            }
+            override fun onNothingSelected() {}
+        })
         binding.barChart.run {
             this.data = data
             setFitBars(true)
@@ -122,12 +136,17 @@ class DetailChartFragment : Fragment() {
             setDrawBarShadow(false)     //그래프 바 그림자 제거
             setDrawGridBackground(false)        //배경에 격자판 제거
             axisLeft.run {      //y축 설정
-                axisMaximum = 25600f      //높이 최대
+                //높이 최대
+                axisMaximum =
+                    if(viewModel.chartMaxTime<=120)
+                        120f
+                    else
+                      viewModel.chartMaxTime.toFloat()
                 axisMinimum = 0f        //높이 최소
                 granularity = 3600f       //60단위마다 선을 그려준다.
-                setLabelCount(4 ,true)
+                setLabelCount(3 ,true)
                 setDrawGridLines(false)  //격자 라인 활용
-                valueFormatter = MyYAxisFormatter()
+                valueFormatter = MyYAxisFormatter(viewModel.chartMaxTime)
                 axisLineColor = R.color.gray        //축 색깔 설정
                 gridColor = R.color.gray        //격자판 색
                 textColor = R.color.black       //글자 색
@@ -160,8 +179,10 @@ class DetailChartFragment : Fragment() {
             return (value-1).toInt().toString()
         }
     }
-    inner class MyYAxisFormatter : ValueFormatter(){
+    inner class MyYAxisFormatter(private val maxTime : Long) : ValueFormatter(){
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            if(maxTime <= 1800)
+                return (value/60).toInt().toString() + "분"
             return (value/3600).toInt().toString() + "시간"
         }
     }
