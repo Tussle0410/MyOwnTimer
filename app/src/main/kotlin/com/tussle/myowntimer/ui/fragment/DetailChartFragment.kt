@@ -2,7 +2,6 @@ package com.tussle.myowntimer.ui.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -115,7 +114,7 @@ class DetailChartFragment : Fragment() {
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 if(e!!.y.toInt() != 0)
                     Toast.makeText(requireContext(),
-                        (e!!.x-1).toInt().toString() + "일 " + viewModel.timeConvert(e!!.y.toLong()),
+                        (e.x-1).toInt().toString() + "일 " + viewModel.timeConvert(e.y.toLong()),
                         Toast.LENGTH_SHORT).show()
 
             }
