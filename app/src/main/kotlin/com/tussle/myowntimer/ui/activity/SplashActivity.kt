@@ -1,6 +1,7 @@
 package com.tussle.myowntimer.ui.activity
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +24,9 @@ class SplashActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.splash_page)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        val window = window
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         viewModel.splashEvent.observe(this,EventObserver{
             startActivity<MainActivity>()
             finish()
