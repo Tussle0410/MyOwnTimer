@@ -96,13 +96,14 @@
                 android:src="@drawable/icon_feedback"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/txt_inquiry" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_main"
-                android:text="문의하기"
+                android:text="@string/txt_inquiry"
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -117,7 +118,8 @@
                 android:src="@drawable/icon_setting_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/txt_inquiry" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -136,13 +138,14 @@
                 android:src="@drawable/icon_backup"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/txt_backup" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_main"
-                android:text="백 업"
+                android:text="@string/txt_backup"
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -157,7 +160,8 @@
                 android:src="@drawable/icon_setting_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/txt_backup" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -167,7 +171,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_main"
             android:padding="10dp"
-            android:text="타이머 알림 설정"
+            android:text="@string/txt_timerAlarmSet"
             android:textColor="@color/black"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -190,7 +194,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/font_main"
                 android:textSize="17sp"
-                android:text="소리" />
+                android:text="@string/txt_sound" />
             <RadioButton
                 android:id="@+id/radio_vibrate"
                 android:layout_width="wrap_content"
@@ -198,7 +202,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/font_main"
                 android:textSize="17sp"
-                android:text="진동"/>
+                android:text="@string/txt_vibrate"/>
 
             <RadioButton
                 android:id="@+id/radio_soundAndVibrate"
@@ -206,7 +210,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/font_main"
-                android:text="소리 + 진동"
+                android:text="@string/txt_soundAndVibrate"
                 android:textSize="17sp" />
         </RadioGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>

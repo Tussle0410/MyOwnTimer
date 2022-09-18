@@ -10,6 +10,7 @@ import com.tussle.myowntimer.databinding.SettingPageBinding
 import com.tussle.myowntimer.sharedPreference.GlobalApplication
 import com.tussle.myowntimer.viewmodel.SettingViewModel
 import de.raphaelebner.roomdatabasebackup.core.RoomBackup
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class SettingActivity : AppCompatActivity() {
@@ -37,10 +38,7 @@ class SettingActivity : AppCompatActivity() {
             finish()
         }
         binding.backupLayout.setOnClickListener {
-            backUp.backup()
-        }
-        binding.reviewLayout.setOnClickListener {
-            backUp.restore()
+            startActivity<BackupActivity>()
         }
     }
     private fun setRadioGroup(){

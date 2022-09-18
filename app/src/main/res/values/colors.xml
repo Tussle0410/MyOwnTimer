@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="bold_gray">#808080</color>
+    <color name="light_gray">#D8D8D8</color>
     <color name="gray">#FCF2E2</color>
     <color name="ic_launcher_background">#FD1101</color>
     //SplashColor
