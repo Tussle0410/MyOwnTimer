@@ -1,5 +1,6 @@
 package com.tussle.myowntimer.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -40,6 +41,9 @@ class SettingActivity : AppCompatActivity() {
         binding.backupLayout.setOnClickListener {
             startActivity<BackupActivity>()
         }
+        binding.inquiryLayout.setOnClickListener {
+            sendEmail()
+        }
     }
     private fun setRadioGroup(){
         binding.timerRadio.check(R.id.radio_sound)
@@ -63,5 +67,13 @@ class SettingActivity : AppCompatActivity() {
                     Log.d("백업 성공", "success: $success, message: $message, exitCode: $exitCode")
                 }
             }
+    }
+    private fun sendEmail(){
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "plane/text"
+        val address = arrayOf("cksgud410@gmail.com")
+        intent.putExtra(Intent.EXTRA_EMAIL, address)
+        intent.putExtra(Intent.EXTRA_SUBJECT, "나만의 타이머 문의하기")
+        startActivity(intent)
     }
 }
