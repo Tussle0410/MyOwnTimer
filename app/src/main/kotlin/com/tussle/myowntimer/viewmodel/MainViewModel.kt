@@ -63,7 +63,7 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
         for( info in viewPagerInfo.value!!){
             if(info.title == previousTitle){
                 info.title = title
-                break;
+                break
             }
         }
         _updateEvent.value = Event(true)
@@ -83,6 +83,7 @@ class MainViewModel(private val repo : Repo) : ViewModel(){
                 break
             }
         }
+        titleCount--
         _deleteEvent.value = Event(true)
     }
     //TitleAndTodo Info -> ViewPagerModel info
