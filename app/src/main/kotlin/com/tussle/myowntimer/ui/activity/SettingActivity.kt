@@ -46,7 +46,11 @@ class SettingActivity : AppCompatActivity() {
         }
     }
     private fun setRadioGroup(){
-        binding.timerRadio.check(R.id.radio_sound)
+        when(GlobalApplication.prefs.settingGetString("alarm", "sound+vibrate")){
+            "sound" -> binding.timerRadio.check(R.id.radio_sound)
+            "vibrate" -> binding.timerRadio.check(R.id.radio_vibrate)
+            "sound+vibrate" -> binding.timerRadio.check(R.id.radio_soundAndVibrate)
+        }
         binding.timerRadio.setOnCheckedChangeListener { _, i ->
             when(i) {
                 R.id.radio_sound -> {GlobalApplication.prefs.settingSetString("alarm", "sound")}
