@@ -1,9 +1,9 @@
 package com.tussle.myowntimer.ui.fragment
 
-import android.app.AlertDialog
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.*
 import android.content.Context
+import android.content.Intent
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.os.*
@@ -21,7 +21,11 @@ import com.tussle.myowntimer.databinding.DetailTimerCountdownFrameBinding
 import com.tussle.myowntimer.databinding.DetailTimerCountdownSetTimeBinding
 import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DB.RepoFactory
+import com.tussle.myowntimer.ui.activity.DetailActivity
 import com.tussle.myowntimer.viewmodel.DetailViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class DetailTimerCountDownFragment : Fragment() {
     private val viewModel : DetailViewModel by lazy {
@@ -37,6 +41,7 @@ class DetailTimerCountDownFragment : Fragment() {
         setButton()
         return binding.root
     }
+
     //CountDown SetTime Dialog Setting
     private fun setDialog(){
         val bindingDialog = DetailTimerCountdownSetTimeBinding.inflate(LayoutInflater.from(requireContext()))
@@ -134,7 +139,11 @@ class DetailTimerCountDownFragment : Fragment() {
     }
     private fun setVibrate(){
         val vibrator = requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        val audioAttributes = AudioAttributes.Builder()
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .setUsage(AudioAttributes.USAGE_ALARM)
+            .build()
         val vibratorPattern = VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE)
-        vibrator.vibrate(vibratorPattern)
+        vibrator.vibrate(vibratorPattern, audioAttributes)
     }
 }

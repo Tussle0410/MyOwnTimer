@@ -1,5 +1,6 @@
 package com.tussle.myowntimer.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import com.tussle.myowntimer.databinding.SplashPageBinding
 import com.tussle.myowntimer.event.EventObserver
 import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DB.RepoFactory
+import com.tussle.myowntimer.service.ForcedTerminationService
 import com.tussle.myowntimer.viewmodel.SplashViewModel
 import org.jetbrains.anko.startActivity
 
@@ -24,6 +26,7 @@ class SplashActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.splash_page)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        startService(Intent(this, ForcedTerminationService::class.java))
         val window = window
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)

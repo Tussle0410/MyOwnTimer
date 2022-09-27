@@ -3,15 +3,19 @@
     package="com.tussle.myowntimer">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+
 
     <application
         android:allowBackup="true"
         android:name=".sharedPreference.GlobalApplication"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name_eng"
+        android:label="@string/app_name_kor"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyOwnTimer">
+        <service android:name=".service.ForcedTerminationService"
+            android:stopWithTask="false"/>
         <activity
             android:name=".ui.activity.SplashActivity"
             android:exported="true">
@@ -23,7 +27,13 @@
         <activity android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.DetailActivity"
-            android:screenOrientation="portrait"/>
+            android:parentActivityName=".ui.activity.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.MainActivity"/>
+        </activity>
+
         <activity android:name=".ui.activity.SettingActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.ProfileActivity"

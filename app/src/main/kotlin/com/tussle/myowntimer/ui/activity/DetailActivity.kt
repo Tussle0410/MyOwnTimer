@@ -2,6 +2,7 @@ package com.tussle.myowntimer.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.ads.AdRequest
@@ -16,6 +17,7 @@ import com.tussle.myowntimer.ui.fragment.DetailChartFragment
 import com.tussle.myowntimer.ui.fragment.DetailTimerFragment
 import com.tussle.myowntimer.ui.fragment.DetailTodoFragment
 import com.tussle.myowntimer.viewmodel.DetailViewModel
+import org.jetbrains.anko.toast
 
 class DetailActivity : AppCompatActivity() {
     private val viewModel : DetailViewModel by lazy {
@@ -30,6 +32,12 @@ class DetailActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         init()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        NotificationManagerCompat.from(this).cancelAll()
+    }
+
     //Set Observer
     private fun setObserver(){
         viewModel.detailFragment.observe(this) {
