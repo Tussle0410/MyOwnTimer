@@ -22,6 +22,7 @@ import com.tussle.myowntimer.databinding.DetailTimerCountdownSetTimeBinding
 import com.tussle.myowntimer.model.DB.Repo
 import com.tussle.myowntimer.model.DB.RepoFactory
 import com.tussle.myowntimer.ui.activity.DetailActivity
+import com.tussle.myowntimer.ui.activity.MainActivity
 import com.tussle.myowntimer.viewmodel.DetailViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -93,11 +94,22 @@ class DetailTimerCountDownFragment : Fragment() {
     }
     //CountDown Timer Start Notification
     private fun setNotification(){
+        val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+            action = Intent.ACTION_MAIN
+            addCategory(Intent.CATEGORY_LAUNCHER)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        }
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE)
+        else
+            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
         val builder = NotificationCompat.Builder(requireContext(), "Start")
             .setSmallIcon(R.drawable.icon_timer)
             .setContentTitle("타이머가 진행중입니다.")
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
 
         val manager : NotificationManager =
             requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
