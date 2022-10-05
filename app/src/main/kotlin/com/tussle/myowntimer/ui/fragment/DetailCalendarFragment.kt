@@ -73,8 +73,10 @@ class DetailCalendarFragment : Fragment() {
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.textView.text = day.date.dayOfMonth.toString()
                 val date = "${day.date} 00:00:00"
-                if(viewModel.calendarTimeEmpty(date))
+                if(viewModel.calendarTimeEmpty(date)){
                     container.textView.setBackgroundColor(resources.getColor(R.color.gray))
+                }else
+                    container.textView.setBackgroundColor(Color.WHITE)
 
                 if (day.owner == DayOwner.THIS_MONTH)
                     container.textView.setTextColor(Color.BLACK)
