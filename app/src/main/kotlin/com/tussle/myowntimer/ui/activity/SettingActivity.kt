@@ -1,6 +1,7 @@
 package com.tussle.myowntimer.ui.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -44,6 +45,9 @@ class SettingActivity : AppCompatActivity() {
         binding.inquiryLayout.setOnClickListener {
             sendEmail()
         }
+        binding.reviewLayout.setOnClickListener {
+            reviewWrite()
+        }
     }
     private fun setRadioGroup(){
         when(GlobalApplication.prefs.settingGetString("alarm", "sound+vibrate")){
@@ -78,6 +82,13 @@ class SettingActivity : AppCompatActivity() {
         val address = arrayOf("cksgud410@gmail.com")
         intent.putExtra(Intent.EXTRA_EMAIL, address)
         intent.putExtra(Intent.EXTRA_SUBJECT, "나만의 타이머 문의하기")
+        startActivity(intent)
+    }
+    private fun reviewWrite(){
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            addCategory(Intent.CATEGORY_DEFAULT)
+            data = Uri.parse("https://play.google.com/store/apps/details?id=com.tussle.myowntimer")
+        }
         startActivity(intent)
     }
 }

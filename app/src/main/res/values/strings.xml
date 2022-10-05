@@ -61,6 +61,7 @@
     <string name="txt_dataBackUp">데이터 백업하기</string>
     <string name="txt_dataRestore">데이터 복원하기</string>
     <string name="txt_recentBackUpDate">최근 백업 날짜</string>
+    <string name="txt_review">리뷰남기기</string>
     <string name="txt_inquiry">문의하기</string>
     <string name="txt_sound">소리</string>
     <string name="txt_vibrate">진동</string>
